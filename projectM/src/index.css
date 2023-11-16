@@ -12,3 +12,11 @@ body{
     margin: 0;
     background-color: lightgray;
 }
+.sidebar{
+    max-width: 70px!important;
+    transition: max-width 1s ease-out;
+  }
+  .sidebar_close{
+    max-width: 20%!important;
+    transition: max-width 1s ease-out;
+  }
