@@ -1,14 +1,16 @@
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
-import NavBar from "./components/NavBar";
-import SideNav from "./components/SideNav";
-import SideBar from "./components/SideNav";
+import Layout from "./pages/Layout";
+import HomePage from "./pages/HomePage";
 
 function App() {
+  const routes = createBrowserRouter([
+    {path: '/', element: <Layout />, children: ([
+      {index: true, element: <HomePage />}
+    ])}
+  ])
   return (
-    <>
-      <NavBar />
-      <SideNav />
-    </>
+    <RouterProvider router={routes}/>
   );
 }
 
