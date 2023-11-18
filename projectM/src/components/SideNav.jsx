@@ -13,7 +13,7 @@ const SideNav = () => {
   const icon = `${toggleBar && 'w-[100%] self-start'}`
   const chevron = 'absolute cursor-pointer text-2xl h-[60px] right-[-15px] top-0 bg-[white] hover:text-[grey] z-[99] hidden md:block'
   return (
-    <nav className={`flex relative ${toggleBar ? 'sidebar' : 'sidebar_close'} w-[20%] h-[100vh] bg-white`}>
+    <nav className={`flex relative ${toggleBar ? 'sidebar' : 'sidebar_close'} w-[20%] h-[100%] bg-white`}>
     <div className='flex overflow-hidden flex-col items-start w-full'>
       <span className={span}>
         <BiHome className={icon}/>

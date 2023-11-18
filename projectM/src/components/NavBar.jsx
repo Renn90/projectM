@@ -6,7 +6,7 @@ const NavBar = () => {
   return (
     <div className="bg-white flex items-center justify-between">
       <div className="w-[100%]">
-        <img src={logo} className="w-[50px] ml-2 p-2" />
+        <img src={logo} className="w-[55px] ml-2 p-2" />
         <hr />
       </div>
       <span className="flex items-center mr-[20px] p-[4px] border-[blue] border-[1px] rounded-md">
