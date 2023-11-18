@@ -9,11 +9,11 @@ const SideNav = () => {
   }
 
   const span = 'flex items-center text-black text-xl justify-start p-4 h-[60px] cursor-pointer hover:bg-[lightgrey] w-[100%]';
-  const anchor = `ml-2 ${toggleBar && 'hidden'}`
-  const icon = `${toggleBar && 'w-[100%]'}`
-  const chevron = 'absolute cursor-pointer text-2xl h-[60px] right-[-15px] top-0 bg-[white] hover:text-[grey] z-[99]'
+  const anchor = `ml-2 ${toggleBar && 'hidden md:hidden'} md:block`
+  const icon = `${toggleBar && 'w-[100%] self-start'}`
+  const chevron = 'absolute cursor-pointer text-2xl h-[60px] right-[-15px] top-0 bg-[white] hover:text-[grey] z-[99] hidden md:block'
   return (
-    <nav className={`flex relative ${toggleBar ? 'sidebar' : 'sidebar_close'} w-[20%] h-[100vh] bg-white `}>
+    <nav className={`flex relative ${toggleBar ? 'sidebar' : 'sidebar_close'} w-[20%] h-[100vh] bg-white`}>
     <div className='flex overflow-hidden flex-col items-start w-full'>
       <span className={span}>
         <BiHome className={icon}/>

@@ -14,7 +14,7 @@ const ProjForm = ({formOpen}) => {
   const labelForm = "flex flex-col w-[100%]";
 
   return (
-    <section className="absolute flex justify-center items-center w-[100%] h-[100%] inset-0 backdrop-blur-lg">
+    <section className="absolute p-4 flex justify-center items-center w-[100%] h-[100%] mb-[20%] md:mb-0">
       <form className="relative rounded bg-white p-5 w-[400px] flex flex-col justify-center">
         <span>
           <label className="text-[blue]">Name</label>
