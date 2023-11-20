@@ -15,7 +15,10 @@ export default {
         "max-w-xl": "1080px",
       },
       colors: {
-       
+       primary: '#022B3A',
+       secondary: '#1F7A8C',
+       grey: '#E1E5F2',
+       white: '#FFFFFF'
     },
     },
   },
