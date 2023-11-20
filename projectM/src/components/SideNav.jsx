@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BiArrowBack, BiArrowFromLeft, BiArrowFromRight, BiChat, BiChevronLeft, BiChevronRight, BiCoinStack, BiHome, BiPin } from "react-icons/bi";
+import { BiArrowBack, BiArrowFromLeft, BiArrowFromRight, BiChat, BiChevronLeft, BiChevronRight, BiCoinStack, BiHome, BiPin, BiUser } from "react-icons/bi";
 
 const SideNav = () => {
 
@@ -24,12 +24,12 @@ const SideNav = () => {
         <a className={anchor}>Chat&nbsp;Room</a>
       </span>
       <span className={span}>
-        <BiPin className={icon}/>
-        <a className={anchor}>Pinned</a>
-      </span>
-      <span className={span}>
         <BiCoinStack className={icon}/>
         <a className={anchor}>Stack</a>
+      </span>
+      <span className={span}>
+        <BiUser className={icon}/>
+        <a className={anchor}>Profile</a>
       </span>
       <span className={`${span} mt-auto font-semibold mb-4`} onClick={toggleHandler }>
         {toggleBar ? <BiArrowFromLeft className={`${icon} text-2xl`}/> : <BiArrowFromRight className={`${icon} text-2xl`}/>}
