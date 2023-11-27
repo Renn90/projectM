@@ -1,12 +1,12 @@
 import React from "react";
 import { BiX } from "react-icons/bi";
 
-const ProjForm = ({formOpen}) => {
+const ProjForm = ({ formOpen }) => {
   const fetchedcartegory = ["html", "css", "javascript"];
 
-  const closeHandler =()=> {
-    formOpen(false)
-  }
+  const closeHandler = () => {
+    formOpen(false);
+  };
 
   const input =
     "bg-white/5 p-2 my-2 w-[97%] border-secondary text-xs bg-transparent outline-0 border border-1 rounded";
@@ -15,7 +15,9 @@ const ProjForm = ({formOpen}) => {
 
   return (
     <section className="absolute top-0 bg-white rounded p-4 flex justify-center items-center w-[100%] h-[100%] mb-[20%] md:mb-0">
-      <form className="relative border-secondary border-[1px] rounded bg-white p-5 w-[400px] flex flex-col justify-center">
+      <div className="absolute inset-0 bg-[#0000008f] rounded h-[100%] w-full z-[9]  flex items-center justify-center cursor-pointer" />
+      <form className="relative border-secondary border-[1px] z-[99] rounded bg-white p-5 w-[400px] flex flex-col justify-center">
+        <p className="py-2">Fill this form to add a New project</p>
         <span>
           <label className="text-secondary">Name</label>
           <input
@@ -56,7 +58,7 @@ const ProjForm = ({formOpen}) => {
           </option>
           {fetchedcartegory.map((cartegory) => (
             <option
-            key={cartegory.id}
+              key={cartegory.id}
               value={cartegory.id}
               className="bg-white"
             >
@@ -65,12 +67,15 @@ const ProjForm = ({formOpen}) => {
           ))}
         </select>
         <button
-        //   disabled={loading || !validForm ? true : false}
+          //   disabled={loading || !validForm ? true : false}
           className="relative gradient bg-secondary text-white px-4 py-2 rounded w-[100%] disabled:opacity-10 disabled:cursor-none hover:bg-primary"
         >
-          Register Now
+          Save Project
         </button>
-        <BiX className="absolute top-[-10px] right-[-10px] bg-secondary text-white rounded-full text-3xl cursor-pointer hover:bg-primary"           onClick={closeHandler}/>
+        <BiX
+          className="absolute top-[-10px] right-[-10px] bg-secondary text-white rounded-full text-3xl cursor-pointer hover:bg-primary"
+          onClick={closeHandler}
+        />
       </form>
     </section>
   );
