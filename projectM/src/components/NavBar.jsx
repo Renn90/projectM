@@ -1,18 +1,26 @@
 import React from "react";
 import logo from "../assets/images/logo.png";
-import { BiSearch } from "react-icons/bi";
+import { BiBell, BiMenuAltRight, BiNotification, BiSearch } from "react-icons/bi";
+import profileImage from '../assets/images/stor3.jpg'
 
-const NavBar = () => {
+const NavBar = ({sethideBar}) => {
   return (
     <div className="bg-white flex items-center justify-between">
       <div className="w-[100%]">
         <img src={logo} className="w-[55px] ml-2 p-2" />
         <hr className="border-grey w-[100%] border-2px"/>
       </div>
-      <span className="flex items-center mr-[20px] p-[4px] border-secondary border-[1px] rounded-md">
-        <BiSearch className="text-secondary mx-2"/>
-        <input type="search" className="outline-0" placeholder="Search for a project"/>
-      </span>
+      <div className="flex justify-center items-center mr-2">
+      <div className="text-2xl mx-2 text-[grey]" >
+      <BiBell />
+      </div>
+      <div className="h-[30px] w-[30px] mx-2">
+        <img src={profileImage} className="w-full h-full rounded-lg object-cover"/>
+      </div>
+      <div className="text-2xl flex mx-2 md:hidden" onClick={()=> sethideBar(false)}>
+      <BiMenuAltRight />
+      </div>
+      </div>
     </div>
   );
 };
