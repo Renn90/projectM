@@ -34,7 +34,7 @@ body{
     max-width: 20%!important;
     transition: max-width 1s ease-out;
   }
-  .hiddenLink{
+  /* .hiddenLink{
     opacity: 0%;
     width: 0px;
     transition: opacity 1s ease-out, width ease-out;
@@ -42,7 +42,7 @@ body{
   .showLink{
     opacity: 0%;
     transition: opacity 1s ease-out, width  ease-out;
-  }
+  } */
   @keyframes slideIn{
     0%{
       transform: translateX(-100%);

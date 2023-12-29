@@ -4,10 +4,11 @@ import { BiArrowFromLeft, BiArrowFromRight, BiChat, BiCoinStack, BiHome, BiUser 
 
 const SideNav = ({hideBar, sethideBar}) => {
   const [toggleBar, setToggleBar] = useState(false)
-  const [screenSize, setScreenSize] = useState(undefined)
+  const [screenSize, setScreenSize] = useState(null)
   const toggleHandler =()=> {
     setToggleBar(!toggleBar)
   }
+
   useEffect(()=>{
     const size =()=> {
       if (window.innerWidth <= 768) {
@@ -16,10 +17,10 @@ const SideNav = ({hideBar, sethideBar}) => {
         setScreenSize(false)
       }
     }
-    size()
     window.onresize = () => {
       size()
     };
+    size()
   },[setScreenSize])
 
   const closeHandler =()=> {
@@ -27,8 +28,8 @@ const SideNav = ({hideBar, sethideBar}) => {
   }
 
   const span = 'flex items-center text-black m-2 rounded-md text-xl justify-start p-4 h-[40px] mx-auto cursor-pointer hover:bg-grey w-[100%] overflow-hidden';
+  //const anchor = `ml-2`
   const anchor = `ml-2 ${toggleBar ? 'hidden' : 'hidden md:block'}`
-  //   const anchor = `ml-2 ${toggleBar ? 'hiddenLink' : 'showLinks'} `
   const icon = `w-[40px]`
 
   return (
