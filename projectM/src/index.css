@@ -35,13 +35,40 @@ body{
     transition: max-width 1s ease-out;
   }
   .hiddenLink{
-    opacity: 0;
+    opacity: 0%;
     width: 0px;
     transition: opacity 1s ease-out, width ease-out;
   }
   .showLink{
     opacity: 0%;
     transition: opacity 1s ease-out, width  ease-out;
+  }
+  @keyframes slideIn{
+    0%{
+      transform: translateX(-200px);
+      opacity: 0;
+    }
+    100%{
+      transform: translateX(0px);
+      opacity: 100%;
+    }
+  }
+  @keyframes slideOut{
+    0%{
+      transform: translateX(0px);
+      opacity: 100%;
+    }
+    100%{
+      transform: translateX(-200px);
+      opacity: 0;
+    }
+  }
+  .slide-in{
+    animation: slideIn 1s;
+  }
+  .slide-out{
+    animation: slideOut 1s;
+    transition: translateX 1s;
   }
   @keyframes widthIn{
     0%{
