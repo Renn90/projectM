@@ -38,7 +38,9 @@ const SideNav = ({hideBar, sethideBar}) => {
   <>
   <div className="absolute inset-0 z-[997] bg-[#0000008f] rounded h-[100%] w-full items-center justify-center cursor-pointer flex md:hidden" onClick={()=> sethideBar(true)}/>
     <nav className={`flex absolute z-[999] ${!hideBar && screenSize && 'slide-in'  } ${toggleBar ? 'sidebar' : 'sidebar_close'} w-[20%] h-[100%] bg-white top-0  md:relative`}>
-    <div className='flex overflow-hidden flex-col mt-4 mx-2 justify-start items-start w-full'>
+    <div className='w-full flex overflow-hidden flex-col justify-start items-center'>
+          <hr className="border-grey w-[100%] border-2px"/>
+      <div className='mt-4 mx-2 px-2 flex overflow-hidden flex-col justify-start items-start w-full h-full'>
       <NavLink to='' className={({isActive}) => isActive ? `bg-grey ${span}` : `${span}` } onClick={closeHandler}>
         <BiHome className={icon}/>
         <NavLink to='' className={anchor}>Home</NavLink>
@@ -56,9 +58,10 @@ const SideNav = ({hideBar, sethideBar}) => {
         <a className={anchor}>Profile</a>
       </NavLink>
       <span className={`${span} mt-auto font-semibold mb-4`} onClick={screenSize ? closeHandler : toggleHandler }>
-        {toggleBar ? <BiArrowFromLeft className={`${icon} text-2xl`}/> : <BiArrowFromRight className={`${icon} text-2xl`}/>}
+        {toggleBar && !screenSize ? <BiArrowFromLeft className={`${icon} text-2xl`}/> : <BiArrowFromRight className={`${icon} text-2xl`}/>}
         <a className={`${anchor} text-lg`}>Collapse</a>
       </span>
+      </div>
     </div>
     </nav>
     </>
