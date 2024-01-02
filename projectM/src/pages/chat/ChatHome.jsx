@@ -20,6 +20,18 @@ export const proj = [
         sender: 'george',
         message: "Lets keep it up then..",
       },
+      {
+        sender: 'kelvin',
+        message: "How is the project going guys",
+      },
+      {
+        sender: 'Kate',
+        message: "its going great",
+      },
+      {
+        sender: 'george',
+        message: "Lets keep it up then..",
+      },
     ],
   },
   {
@@ -39,6 +51,7 @@ export const proj = [
         sender: 'george',
         message: "Lets keep it up then..",
       },
+
     ],
   },
   {

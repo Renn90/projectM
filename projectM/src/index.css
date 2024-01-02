@@ -18,6 +18,20 @@ body{
   flex-direction: column;
   height: 100vh;
 }
+.slidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.slidebar::-webkit-scrollbar-track {
+  border-radius: 7px;
+  margin-block: 10px;
+}
+
+.slidebar::-webkit-scrollbar-thumb {
+  border-radius: 7px;
+  background: #1f7a8ca8;
+}
+
 @keyframes fadeOut {
   0% {
     display: flex;

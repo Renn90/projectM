@@ -1,27 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { BiArrowFromLeft, BiArrowFromRight, BiChat, BiCoinStack, BiHome, BiUser } from "react-icons/bi";
 
-const SideNav = ({hideBar, sethideBar}) => {
+const SideNav = ({hideBar, sethideBar, screenSize}) => {
   const [toggleBar, setToggleBar] = useState(false)
-  const [screenSize, setScreenSize] = useState(null)
+
   const toggleHandler =()=> {
     setToggleBar(!toggleBar)
   }
-
-  useEffect(()=>{
-    const size =()=> {
-      if (window.innerWidth <= 768) {
-        setScreenSize(true)
-      }else{
-        setScreenSize(false)
-      }
-    }
-    window.onresize = () => {
-      size()
-    };
-    size()
-  },[setScreenSize])
 
   const closeHandler =()=> {
     sethideBar(true)
@@ -33,8 +19,6 @@ const SideNav = ({hideBar, sethideBar}) => {
   const icon = `w-[40px]`
 
   return (
-    <>
-  { hideBar && screenSize ? <></> :
   <>
   <div className="absolute inset-0 z-[997] bg-[#0000008f] rounded h-[100%] w-full items-center justify-center cursor-pointer flex md:hidden" onClick={()=> sethideBar(true)}/>
     <nav className={`flex absolute z-[999] ${!hideBar && screenSize && 'slide-in'  } ${toggleBar ? 'sidebar' : 'sidebar_close'} w-[20%] h-[100%] bg-white top-0  md:relative`}>
@@ -64,8 +48,6 @@ const SideNav = ({hideBar, sethideBar}) => {
       </div>
     </div>
     </nav>
-    </>
-    }
     </>
   )
 }
