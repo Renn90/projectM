@@ -6,6 +6,7 @@ import ProfilePage from "./pages/Profile/ProfilePage";
 import Stack from "./pages/Stack";
 import ChatHome from "./pages/chat/ChatHome";
 import ChatPage from "./pages/chat/ChatPage";
+import Auth from "./pages/Auth/Auth";
 
 function App() {
   const routes = createBrowserRouter([
@@ -15,7 +16,8 @@ function App() {
       {path: '/chat', element: <ChatHome /> },
       {path: '/chat/:projectID', element: <ChatPage /> },
       {path: '/stack', element: <Stack />}
-    ])}
+    ])},
+    {path: '/Auth', element: <Auth />}
   ])
   return (
     <RouterProvider router={routes}/>

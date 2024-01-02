@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../assets/images/logo.png";
-import { BiBell, BiMenuAltRight, BiNotification, BiSearch } from "react-icons/bi";
+import { BiBell, BiMenuAltRight } from "react-icons/bi";
 import profileImage from '../assets/images/stor3.jpg'
 
 const NavBar = ({sethideBar}) => {

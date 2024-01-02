@@ -19,7 +19,7 @@ const HomePage = () => {
       <Frame>
       {proj.length <= 0 ? (
         <div className="w-[100%] h-[100%] flex flex-col justify-center items-center mb-[50%] md:mb-0">
-          <p className="text-2xl px-4 text-center">You have no added projects</p>
+          <p className="text-xl px-4 text-center sm:text-2xl">You have no added projects</p>
           <BiPlus className="my-3 text-white bg-secondary p-2 rounded-full text-[50px] cursor-pointer hover:bg-primary" onClick={()=>setOpenForm(true)}/>
         </div>
       ) : (

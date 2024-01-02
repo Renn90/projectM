@@ -32,6 +32,10 @@ body{
   background: #1f7a8ca8;
 }
 
+.hight-grow{
+  transition: height 1s ease-in;
+}
+
 @keyframes fadeOut {
   0% {
     display: flex;
