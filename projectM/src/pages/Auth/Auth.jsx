@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { BiEnvelope, BiLock, BiUser } from "react-icons/bi";
 import Frame from "../../components/Frame";
 import { Link, useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
+import {getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 
 const Auth = () => {
   const [firstName, setFirstName] = useState("");
@@ -41,6 +41,37 @@ const Auth = () => {
   const confirmPass =(e)=> {
     setConfirmPassowrd(e.target.value)
   }
+  const auth = getAuth()
+  const onSignUp = async ()=> {
+     try {
+       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+       const { uid, email: userEmail } = userCredential.user;
+      console.log(user)
+      const userDataForSanity = {
+        _id: uid, // Use Firebase UID as the Sanity document ID
+        firstname: firstName,
+        lastname: lastName,
+        email: userEmail,
+      };
+
+      const sanityAPI =`https://jf3w5ozh.api.sanity.io/data/user/documents`;
+      const sanityToken = 'skm3L8hv2jH8jJjUb4Z1F7sTIM6aDdO6loo00BQ8ugV0d8fM19BxFdZzQRuBRSy5n1Rs7mJZcnuyEm9LyJEsW4XgPbRr6EQcHlVspTMjI73p9X3GeR5uEeaBa6tA7MpWov2mcG4UzAuFJXd3HGXKquSGssU1xt0hceGtAUA56QC6qhbuG8Cq';
+      
+      await fetch(sanityAPI, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${sanityToken}`,
+        },
+        body: JSON.stringify({ mutations: [{ createOrReplace: userDataForSanity }] }),
+      });
+  
+      console.log('User created and synced to Sanity successfully');
+    } catch (error) {
+      console.error('Error creating user:', error.message);
+    }
+
+  } 
 
   const [searchParams] = useSearchParams()
 
@@ -121,7 +152,7 @@ const Auth = () => {
           <Link to="/auth?mode=signup" className="text-secondary mx-2 hover:opacity-70">SIgn-up</Link>
         </p>}
         {!validForm && <p className="text-[red] text-sm mb-4">Please confirm your input is valid</p>}
-        <input type="submit" name="submit" disabled={isLogin ? !validLogin : !validSignUp}  className={`outline-none p-2 rounded text-white w-full cursor-pointer bg-secondary hover:opacity-70 disabled:opacity-60 disabled:cursor-not-allowed`}/>
+        <input type="submit" name="submit" disabled={isLogin && !validLogin } onClick={!isLogin && onSignUp} className={`outline-none p-2 rounded text-white w-full cursor-pointer bg-secondary hover:opacity-70 disabled:opacity-60 disabled:cursor-not-allowed`}/>
         </div>
       </Frame>
     </div>

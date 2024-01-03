@@ -5,8 +5,14 @@ export const userSchema = {
     type: 'document',
     fields: [
       {
-        name: 'username',
-        title: 'Username',
+        name: 'firstname',
+        title: 'firstname',
+        type: 'string',
+        validation: (Rule) => Rule.required(),
+      },
+      {
+        name: 'lastname',
+        title: 'lastname',
         type: 'string',
         validation: (Rule) => Rule.required(),
       },
