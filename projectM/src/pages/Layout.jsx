@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import NavBar from "../components/NavBar";
 import SideNav from "../components/SideNav";
 import { Outlet } from "react-router-dom";
+import UserContext from "./Auth/UserContext";
 
 const Layout = () => {
   const [hideBar, sethideBar] = useState(true);
@@ -24,14 +25,14 @@ const Layout = () => {
 
 
   return (
-    <>
+    <UserContext>
       <NavBar sethideBar={sethideBar}/>
       <div className="flex h-[100%]">
        { !hideBar && screenSize && <SideNav hideBar={hideBar} sethideBar={sethideBar} screenSize={screenSize} />}
        { !screenSize && <SideNav hideBar={hideBar} sethideBar={sethideBar} screenSize={screenSize} />}
         <Outlet />
       </div>
-    </>
+    </UserContext>
   );
 };
 
