@@ -9,12 +9,13 @@ import ChatPage from "./pages/chat/ChatPage";
 import Auth from "./pages/Auth/Auth";
 import { signUpAction } from "./pages/Auth/AuthFunction";
 import { userLoader } from "./pages/Layout";
+import { profileFormAction } from "./pages/Profile/ProfileForm";
 
 function App() {
   const routes = createBrowserRouter([
     {path: '/', element: <Layout />, loader: userLoader, id: 'layout',  children: ([
       {index: true, element: <HomePage />},
-      {path: '/profile', element: <ProfilePage />},
+      {path: '/profile', element: <ProfilePage />, action: profileFormAction},
       {path: '/chat', element: <ChatHome /> },
       {path: '/chat/:projectID', element: <ChatPage /> },
       {path: '/stack', element: <Stack />}

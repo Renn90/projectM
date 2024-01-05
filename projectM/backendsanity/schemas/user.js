@@ -28,6 +28,21 @@ export const userSchema = {
         type: 'string',
       },
       {
+        name: 'job',
+        title: 'Job Title',
+        type: 'string',
+      },
+      {
+        name: 'gitLink',
+        title: 'Git',
+        type: 'url',
+      },
+      {
+        name: 'portfolioLink',
+        title: 'Portfolio',
+        type: 'url',
+      },
+      {
         name: 'projects',
         title: 'Projects',
         type: 'array',

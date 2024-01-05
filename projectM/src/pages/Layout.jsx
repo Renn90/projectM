@@ -1,7 +1,7 @@
 import React, { useState,useEffect, useContext } from "react";
 import NavBar from "../components/NavBar";
 import SideNav from "../components/SideNav";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigation } from "react-router-dom";
 import UserContext from "./Auth/UserContext";
 import { sanityToken } from "./Auth/AuthFunction";
 import { createClient } from "@sanity/client";
@@ -26,6 +26,7 @@ const Layout = () => {
    window.removeEventListener('resize', handleResize);
  };
  },[])
+
 
   return (
     <UserContext>
@@ -56,8 +57,7 @@ export const userLoader = async () => {
     } else {
       return redirect("/Auth");
     }
-    async function fetchUser (uid){
-      console.log(uid)
+    async function fetchUser(uid){
       const userQuery = `*[_type == "user" && _id == "${uid}"]`;
       try {
         const response = await client.fetch(userQuery, {

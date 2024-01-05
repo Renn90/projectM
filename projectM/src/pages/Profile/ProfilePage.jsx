@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa6";
 import {
   BiCamera,
@@ -11,8 +11,10 @@ import {
 import Frame from "../../components/Frame";
 import cover from "../../assets/images/storage.jpg";
 import profileImg from "../../assets/images/stor3.jpg";
+import { useNavigation } from "react-router-dom";
 import ProfileForm from "./ProfileForm";
 import { Context } from "../Auth/UserContext";
+import { useActionData } from "react-router-dom";
 
 const ProfilePage = () => {
   const links = {
@@ -21,9 +23,18 @@ const ProfilePage = () => {
   };
 
   const user = useContext(Context);
-  console.log(user);
+  const action = useActionData()
 
   const [showForm, setShowForm] = useState(false);
+
+  useEffect(()=>{
+    if(action){
+      setShowForm(false)
+    }
+  },[action])
+
+  const navigationState = useNavigation()
+  const loading = navigationState.state === 'submitting' || navigationState === 'loading'
 
   return (
     <section className="w-[100%] p-4 rounded md:px-8">
@@ -57,8 +68,8 @@ const ProfilePage = () => {
               <h2 className="font-bold pt-1">
                 {user.firstname.toUpperCase()} {user.lastname.toUpperCase()}
               </h2>
-              <p className="text-[grey]">heckton</p>
-              <p className="text-sm">Frontend Developer</p>
+              <p className="text-[grey]">{user.nickname}</p>
+               <p className="text-sm">{user.job}</p>
             </div>
             <div className="p-3 my-2 border-[1px] border-grey rounded">
               <p className="text-sm py-1 font-bold opacity-70">Links:</p>
@@ -103,6 +114,11 @@ const ProfilePage = () => {
           {showForm && <ProfileForm showForm={showForm} />}
         </div>
       </Frame>
+      {loading && (
+        <div className="fixed left-0 top-[0] h-[100%] flex justify-center items-center w-[100%] bg-black/70 z-[999]">
+          <span className="spinner-big"></span>
+        </div>
+      )}
     </section>
   );
 };

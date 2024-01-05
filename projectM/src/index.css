@@ -52,15 +52,28 @@ body{
     max-width: 20%!important;
     transition: max-width 1s ease-out;
   }
-  /* .hiddenLink{
-    opacity: 0%;
-    width: 0px;
-    transition: opacity 1s ease-out, width ease-out;
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
-  .showLink{
-    opacity: 0%;
-    transition: opacity 1s ease-out, width  ease-out;
-  } */
+  .spinner-big{
+    height: 100px!important;
+    width: 100px!important;
+  }
+  .spinner,.spinner-big {
+    position: absolute;
+    top: 20%;
+    width: 20px;
+    height: 20px;
+    border: 5px solid transparent;
+    border-radius: 50%;
+    border-top-color: #ccc;
+    animation: spin 1s linear infinite;
+  }
   @keyframes slideIn{
     0%{
       transform: translateX(-100%);
