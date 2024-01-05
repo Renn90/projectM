@@ -27,23 +27,23 @@ const SideNav = ({hideBar, sethideBar, screenSize}) => {
       <div className='mt-4 mx-2 px-2 flex overflow-hidden flex-col justify-start items-start w-full h-full'>
       <NavLink to='' className={({isActive}) => isActive ? `bg-grey ${span}` : `${span}` } onClick={closeHandler}>
         <BiHome className={icon}/>
-        <NavLink to='' className={anchor}>Home</NavLink>
+        <p to='' className={anchor}>Home</p>
       </NavLink>
      <NavLink to='/chat' className={({isActive}) => isActive ? `bg-grey ${span}` : `${span}` } onClick={closeHandler}>
         <BiChat className={icon}/>
-        <a className={anchor}>Chat</a>
+        <p className={anchor}>Chat</p>
       </NavLink>
       <NavLink to='/stack' className={({isActive}) => isActive ? `bg-grey ${span}` : `${span}` } onClick={closeHandler}>
         <BiCoinStack className={icon}/>
-        <a className={anchor}>Stack</a>
+        <p className={anchor}>Stack</p>
       </NavLink>
      <NavLink to='/profile' className={({isActive}) => isActive ? `bg-grey ${span}` : `${span}` } onClick={closeHandler}>
         <BiUser className={icon}/>
-        <a className={anchor}>Profile</a>
+        <p className={anchor}>Profile</p>
       </NavLink>
       <span className={`${span} mt-auto font-semibold mb-4`} onClick={screenSize ? closeHandler : toggleHandler }>
         {toggleBar && !screenSize ? <BiArrowFromLeft className={`${icon} text-2xl`}/> : <BiArrowFromRight className={`${icon} text-2xl`}/>}
-        <a className={`${anchor} text-lg`}>Collapse</a>
+        <p className={`${anchor} text-lg`}>Collapse</p>
       </span>
       </div>
     </div>

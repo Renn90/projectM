@@ -81,7 +81,7 @@ const ChatHome = () => {
       <Frame>
         <div className="p-4 h-full overflow-y-scroll">
           {proj.map((proj) => (
-            <Link to={`/chat/${proj.id}`}>
+            <Link to={`/chat/${proj.id}`} key={proj.id}>
               <div className="my-4 pt-4 p-2 cursor-pointer rounded border-b-1 border-b-[1px] hover:bg-[lightgrey]">
                 <h2 className="font-semibold">{proj.name}</h2>
                 <i className="text-[grey] text-sm">{proj.devs} team members</i>

@@ -23,6 +23,11 @@ export const userSchema = {
         validation: (Rule) => Rule.required(),
       },
       {
+        name: 'nickname',
+        title: 'Nickname',
+        type: 'string',
+      },
+      {
         name: 'projects',
         title: 'Projects',
         type: 'array',

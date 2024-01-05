@@ -1,8 +1,12 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect, useContext } from "react";
 import NavBar from "../components/NavBar";
 import SideNav from "../components/SideNav";
 import { Outlet } from "react-router-dom";
 import UserContext from "./Auth/UserContext";
+import { sanityToken } from "./Auth/AuthFunction";
+import { createClient } from "@sanity/client";
+import { jwtDecode } from "jwt-decode";
+import { redirect} from "react-router-dom";
 
 const Layout = () => {
   const [hideBar, sethideBar] = useState(true);
@@ -23,7 +27,6 @@ const Layout = () => {
  };
  },[])
 
-
   return (
     <UserContext>
       <NavBar sethideBar={sethideBar}/>
@@ -37,3 +40,40 @@ const Layout = () => {
 };
 
 export default Layout;
+
+export const userLoader = async () => {
+  const client = createClient({
+    projectId: "jf3w5ozh",
+    dataset: "production",
+    useCdn: false
+  })
+
+  const token = window.localStorage.getItem("token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      const uid = decoded.user_id
+      return fetchUser(uid)
+    } else {
+      return redirect("/Auth");
+    }
+    async function fetchUser (uid){
+      console.log(uid)
+      const userQuery = `*[_type == "user" && _id == "${uid}"]`;
+      try {
+        const response = await client.fetch(userQuery, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${sanityToken}`,
+          },
+        });
+    
+        const user = await response;
+        return user[0];
+      } catch (err) {
+        console.log(err);
+        return null
+      }
+    }
+};
+
+

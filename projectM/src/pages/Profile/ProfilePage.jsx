@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { FaUser } from "react-icons/fa6";
 import {
   BiCamera,
   BiEdit,
@@ -11,12 +12,16 @@ import Frame from "../../components/Frame";
 import cover from "../../assets/images/storage.jpg";
 import profileImg from "../../assets/images/stor3.jpg";
 import ProfileForm from "./ProfileForm";
+import { Context } from "../Auth/UserContext";
 
 const ProfilePage = () => {
   const links = {
     git: "githublink.com",
     profLink: "portfolio.johndoe.com",
   };
+
+  const user = useContext(Context);
+  console.log(user);
 
   const [showForm, setShowForm] = useState(false);
 
@@ -36,14 +41,22 @@ const ProfilePage = () => {
           >
             <div className="flex flex-col mb-2">
               <span className="relative w-[90px] h-[90px]">
-                <img
-                  alt="profile image"
-                  src={profileImg}
-                  className="h-full w-full object-cover rounded-full cursor-pointer"
-                />
+                {user.profileimage ? (
+                  <img
+                    alt="profile image"
+                    src={profileImg}
+                    className="h-full w-full object-cover rounded-full cursor-pointer"
+                  />
+                ) : (
+                  <div className="bg-grey rounded-full h-[90px] w-[90px]">
+                    <FaUser className="m-auto text-[grey] h-full w-[40%]" />
+                  </div>
+                )}
                 <BiCamera className="bg-secondary p-2 rounded-full text-3xl text-white absolute bottom-0 right-0 cursor-pointer" />
               </span>
-              <h2 className="font-bold pt-1">John Doe</h2>
+              <h2 className="font-bold pt-1">
+                {user.firstname.toUpperCase()} {user.lastname.toUpperCase()}
+              </h2>
               <p className="text-[grey]">heckton</p>
               <p className="text-sm">Frontend Developer</p>
             </div>
@@ -81,13 +94,13 @@ const ProfilePage = () => {
               <button
                 disabled={showForm ? true : false}
                 className="relative gradient bg-secondary text-white px-4 py-2 mt-2 rounded disabled:opacity-10 disabled:cursor-none hover:bg-primary"
-                onClick={()=>setShowForm(true)}
+                onClick={() => setShowForm(true)}
               >
                 <BiEdit />
               </button>
             </div>
           </div>
-          {showForm && <ProfileForm showForm={showForm}/>}
+          {showForm && <ProfileForm showForm={showForm} />}
         </div>
       </Frame>
     </section>

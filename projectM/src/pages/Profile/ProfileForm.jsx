@@ -1,6 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
+import { Context } from "../Auth/UserContext";
 
 const ProfileForm = ({showForm}) => {
+
+
+  const user = useContext(Context);
+  console.log(user);
+
   const input =
     "bg-white/5 p-2 mb-2 w-[100%] border-secondary text-xs bg-transparent outline-0 border border-1 rounded";
   const fetchedcartegory = ["html", "css", "javascript"];
@@ -20,6 +26,7 @@ const ProfileForm = ({showForm}) => {
               type="text"
               placeholder="Enter your first name"
               className={input}
+              value={user.firstname}
             />
           </span>
           <span className="w-full mr-1">
@@ -28,6 +35,7 @@ const ProfileForm = ({showForm}) => {
               type="text"
               placeholder="Enter your last name"
               className={input}
+              value={user.lastname}
             />
           </span>
         </div>
