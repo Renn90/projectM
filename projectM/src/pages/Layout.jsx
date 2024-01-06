@@ -1,7 +1,7 @@
 import React, { useState,useEffect, useContext } from "react";
 import NavBar from "../components/NavBar";
 import SideNav from "../components/SideNav";
-import { Outlet, useNavigation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import UserContext from "./Auth/UserContext";
 import { sanityToken } from "./Auth/AuthFunction";
 import { createClient } from "@sanity/client";
@@ -26,7 +26,6 @@ const Layout = () => {
    window.removeEventListener('resize', handleResize);
  };
  },[])
-
 
   return (
     <UserContext>
@@ -66,7 +65,7 @@ export const userLoader = async () => {
             Authorization: `Bearer ${sanityToken}`,
           },
         });
-    
+        
         const user = await response;
         return user[0];
       } catch (err) {

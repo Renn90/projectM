@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter, useNavigation } from "react-router-dom";
 import "./App.css";
 import Layout from "./pages/Layout";
 import HomePage from "./pages/HomePage";
@@ -10,18 +10,20 @@ import Auth from "./pages/Auth/Auth";
 import { signUpAction } from "./pages/Auth/AuthFunction";
 import { userLoader } from "./pages/Layout";
 import { profileFormAction } from "./pages/Profile/ProfileForm";
+import { ProtectRoute } from "./pages/Auth/ProtectRoutes";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   const routes = createBrowserRouter([
-    {path: '/', element: <Layout />, loader: userLoader, id: 'layout',  children: ([
-      {index: true, element: <HomePage />},
-      {path: '/profile', element: <ProfilePage />, action: profileFormAction},
-      {path: '/chat', element: <ChatHome /> },
-      {path: '/chat/:projectID', element: <ChatPage /> },
-      {path: '/stack', element: <Stack />}
+    {path: '/', element: <Layout />, loader: userLoader, id: 'layout', errorElement: <ErrorPage />,  children: ([
+      {index: true, element: <HomePage />, loader: ProtectRoute},
+      {path: '/profile', element: <ProfilePage />, action: profileFormAction, loader: ProtectRoute},
+      {path: '/chat', element: <ChatHome />, loader: ProtectRoute },
+      {path: '/chat/:projectID', element: <ChatPage />, loader: ProtectRoute },
+      {path: '/stack', element: <Stack />, loader: ProtectRoute}
     ])},
-    {path: '/Auth', element: <Auth />, action: signUpAction}
-  ])
+    {path: '/Auth', element: <Auth />, action: signUpAction},
+  ])  
   return (
     <RouterProvider router={routes}/>
   );

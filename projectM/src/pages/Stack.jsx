@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import Frame from "../components/Frame";
 import { BiLogoHtml5, BiLogoJavascript, BiPlus } from "react-icons/bi";
 import StackModal from "../components/StackModal";
+import { useNavigation } from "react-router-dom";
+import Loader from "../components/UI/Loader";
 
 const Stack = () => {
   const [addStack, setAddStack] = useState(false)
+  const navigation = useNavigation()
+  const loading = navigation.state == 'loading'
   return (
     <section className="relative w-[100%] flex flex-col justify-center p-4 px-8">
       <h1 className="font-bold text-2xl pb-2">My Stack</h1>
@@ -35,6 +39,7 @@ const Stack = () => {
         </div>
        {addStack && <StackModal addStack={()=>setAddStack()}/>}
       </Frame>
+      {loading && <Loader />}
     </section>
   );
 };

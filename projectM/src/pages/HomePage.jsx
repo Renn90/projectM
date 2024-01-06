@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import { BiPlus } from "react-icons/bi";
 import ProjForm from "../components/ProjForm";
 import Frame from "../components/Frame";
+import { useNavigation } from "react-router-dom";
+import Loader from "../components/UI/Loader";
 
 const HomePage = () => {
   const [openForm, setOpenForm] = useState(false)
@@ -13,6 +15,9 @@ const HomePage = () => {
     //   link: "sfvgretgt/th/ethtyehty/hyhy",
     // }, 
   ];
+  const navigation = useNavigation()
+  const loading = navigation.state == 'loading'
+
   return (
     <section className="relative w-[100%] flex flex-col justify-center p-4 px-8">
       <h1 className="font-bold text-2xl pb-2">Project Dashboard</h1>
@@ -25,8 +30,9 @@ const HomePage = () => {
       ) : (
         <div></div>
       )}
-            {openForm && <ProjForm formOpen={setOpenForm}/>}
+       {openForm && <ProjForm formOpen={setOpenForm}/>}
       </Frame>
+      {loading && <Loader />}
     </section>
   );
 };

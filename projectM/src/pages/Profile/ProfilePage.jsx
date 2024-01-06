@@ -15,6 +15,7 @@ import { useNavigation } from "react-router-dom";
 import ProfileForm from "./ProfileForm";
 import { Context } from "../Auth/UserContext";
 import { useActionData } from "react-router-dom";
+import Loader from "../../components/UI/Loader";
 
 const ProfilePage = () => {
   const links = {
@@ -115,9 +116,7 @@ const ProfilePage = () => {
         </div>
       </Frame>
       {loading && (
-        <div className="fixed left-0 top-[0] h-[100%] flex justify-center items-center w-[100%] bg-black/70 z-[999]">
-          <span className="spinner-big"></span>
-        </div>
+        <Loader />
       )}
     </section>
   );
