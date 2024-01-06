@@ -26,6 +26,9 @@ export const signUpAction = async ({ request }) => {
       );
       const token = await userCredential.user.getIdToken();
       window.localStorage.setItem("token", token);
+      const expireLogout = new Date();
+      expireLogout.setHours(expireLogout.getHours() + 10)
+      window.localStorage.setItem('expiration', expireLogout.toISOString())
       return redirect('/')
     }catch(err){
       if (err.code === "auth/invalid-credential") {
@@ -54,6 +57,9 @@ export const signUpAction = async ({ request }) => {
       );
       const token = await userCredential.user.getIdToken();
       window.localStorage.setItem("token", token);
+      const expireLogout = new Date();
+      expireLogout.setHours(expireLogout.getHours() + 10)
+      window.localStorage.setItem('expiration', expireLogout.toISOString())
       const { uid, email: userEmail } = userCredential.user;
       const userDataForSanity = {
         _id: uid, // Useing Firebase UID as the Sanity document ID

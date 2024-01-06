@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import logo from "../assets/images/logo.png";
+import { Form } from "react-router-dom";
 import { BiMenuAltRight } from "react-icons/bi";
 import { MdLogout } from "react-icons/md";
 import { FaUser } from "react-icons/fa6";
@@ -23,9 +24,11 @@ const NavBar = ({sethideBar}) => {
        </div>
        }
       </div>
-      <div className="text-2xl mx-2 text-[grey]" >
+      <Form action="/logout" method="post">
+      <button className="text-2xl mx-2 text-[grey] hover:text-[lightgrey] cursor-pointer outline-none border-none flex items-center justify-center" >
       <MdLogout />
-      </div>
+      </button>
+      </Form>
       <div className="text-2xl flex mx-2 md:hidden cursor-pointer" onClick={()=> sethideBar(false)}>
       <BiMenuAltRight />
       </div>

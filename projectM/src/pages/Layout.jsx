@@ -16,7 +16,6 @@ const Layout = () => {
     const handleResize = () => {
    setScreenSize(window.innerWidth <= 768);
  };
-
  window.addEventListener('resize', handleResize);
 
  // Initial check
@@ -26,6 +25,30 @@ const Layout = () => {
    window.removeEventListener('resize', handleResize);
  };
  },[])
+
+ const expiration =()=> {
+  const storedExpiration = localStorage.getItem('expiration')
+  if(storedExpiration){
+    const expirationDate = new Date(storedExpiration)
+    const now = new Date();
+    const duration = expirationDate.getTime() - now.getTime();
+    return duration;
+  }
+}
+
+const token = window.localStorage.getItem('token');
+
+useEffect(()=>{
+const duration = expiration()
+console.log(duration)
+ if(!token){
+  return;
+ }
+ setTimeout(() => {
+  redirect('/logout')
+ }, duration);
+},[token, expiration])
+
 
   return (
     <UserContext>

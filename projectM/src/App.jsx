@@ -12,6 +12,7 @@ import { userLoader } from "./pages/Layout";
 import { profileFormAction } from "./pages/Profile/ProfileForm";
 import { ProtectRoute } from "./pages/Auth/ProtectRoutes";
 import ErrorPage from "./pages/ErrorPage";
+import { lougoutAction } from "./pages/logout";
 
 function App() {
   const routes = createBrowserRouter([
@@ -22,7 +23,8 @@ function App() {
       {path: '/chat/:projectID', element: <ChatPage />, loader: ProtectRoute },
       {path: '/stack', element: <Stack />, loader: ProtectRoute}
     ])},
-    {path: '/Auth', element: <Auth />, action: signUpAction},
+    {path: '/Auth', element: <Auth />, action: signUpAction, errorElement: <ErrorPage />},
+    {path: '/logout', action: lougoutAction},
   ])  
   return (
     <RouterProvider router={routes}/>
