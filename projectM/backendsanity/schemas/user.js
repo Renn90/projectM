@@ -42,29 +42,29 @@ export const userSchema = {
         title: 'Portfolio',
         type: 'url',
       },
-      {
-        name: 'projects',
-        title: 'Projects',
-        type: 'array',
-        of: [
-          {
-            type: 'object',
-            fields: [
-              {
-                name: 'project',
-                title: 'Project',
-                type: 'reference',
-                to: [{ type: 'project' }],
-              },
-              {
-                name: 'role',
-                title: 'Role',
-                type: 'string', // You can define roles like 'owner', 'member', etc.
-              },
-            ],
-          },
-        ],
-      },
+      // {
+      //   name: 'projects',
+      //   title: 'Projects',
+      //   type: 'array',
+      //   of: [
+      //     {
+      //       type: 'object',
+      //       fields: [
+      //         {
+      //           name: 'project',
+      //           title: 'Project',
+      //           type: 'reference',
+      //           to: [{ type: 'project' }],
+      //         },
+      //         {
+      //           name: 'role',
+      //           title: 'Role',
+      //           type: 'string', // You can define roles like 'owner', 'member', etc.
+      //         },
+      //       ],
+      //     },
+      //   ],
+      // },
     ],
   };
   

@@ -7,14 +7,7 @@ import Loader from "../components/UI/Loader";
 
 const HomePage = () => {
   const [openForm, setOpenForm] = useState(false)
-  const proj = [
-    //    {
-    //   name: "To-do list",
-    //   github: "hhhd/kdkkdddd/dkdkkd",
-    //   stacks: [],
-    //   link: "sfvgretgt/th/ethtyehty/hyhy",
-    // }, 
-  ];
+  const proj = [];
   const navigation = useNavigation()
   const loading = navigation.state == 'loading'
 

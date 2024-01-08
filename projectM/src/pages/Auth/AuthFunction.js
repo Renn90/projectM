@@ -46,7 +46,6 @@ export const signUpAction = async ({ request }) => {
         console.log(error);
         return json('Error, try again');
       }
-      return null
     }    
   }else {
     try {

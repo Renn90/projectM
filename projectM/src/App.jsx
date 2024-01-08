@@ -3,14 +3,14 @@ import "./App.css";
 import Layout from "./pages/Layout";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/Profile/ProfilePage";
-import Stack from "./pages/Stack";
+import Stack, { stackLoader } from "./pages/Stack";
 import ChatHome from "./pages/chat/ChatHome";
 import ChatPage from "./pages/chat/ChatPage";
 import Auth from "./pages/Auth/Auth";
 import { signUpAction } from "./pages/Auth/AuthFunction";
 import { userLoader } from "./pages/Layout";
 import { profileFormAction } from "./pages/Profile/ProfileForm";
-import { ProtectRoute } from "./pages/Auth/ProtectRoutes";
+import { ProtectRoute, protectAuth } from "./pages/Auth/ProtectRoutes";
 import ErrorPage from "./pages/ErrorPage";
 import { lougoutAction } from "./pages/logout";
 
@@ -21,11 +21,11 @@ function App() {
       {path: '/profile', element: <ProfilePage />, action: profileFormAction, loader: ProtectRoute},
       {path: '/chat', element: <ChatHome />, loader: ProtectRoute },
       {path: '/chat/:projectID', element: <ChatPage />, loader: ProtectRoute },
-      {path: '/stack', element: <Stack />, loader: ProtectRoute}
+      {path: '/stack', element: <Stack />, loader: stackLoader}
     ])},
-    {path: '/Auth', element: <Auth />, action: signUpAction, errorElement: <ErrorPage />},
-    {path: '/logout', action: lougoutAction, loader: ProtectRoute},
-  ])  
+    {path: '/Auth', element: <Auth />, action: signUpAction, errorElement: <ErrorPage />, loader: protectAuth},
+    {path: '/logout', action: lougoutAction},
+  ])  ;
   return (
     <RouterProvider router={routes}/>
   );
