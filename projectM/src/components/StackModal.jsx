@@ -20,8 +20,6 @@ const StackModal = ({ addStack }) => {
     devops_tools: techStacks.devops_tools,
   };
 
-  const select = 'p-4'
-
   return (
     <div className="absolute top-0 bg-white rounded p-4 flex justify-center items-center w-[100%] h-[100%] mb-[20%] md:mb-0">
       <div className="absolute inset-0 bg-[#0000008f] rounded h-[100%] w-full z-[9]  flex items-center justify-center cursor-pointer" />
