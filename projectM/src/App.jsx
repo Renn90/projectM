@@ -24,7 +24,7 @@ function App() {
       {path: '/stack', element: <Stack />, loader: ProtectRoute}
     ])},
     {path: '/Auth', element: <Auth />, action: signUpAction, errorElement: <ErrorPage />},
-    {path: '/logout', action: lougoutAction},
+    {path: '/logout', action: lougoutAction, loader: ProtectRoute},
   ])  
   return (
     <RouterProvider router={routes}/>

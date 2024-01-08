@@ -4,6 +4,7 @@ export const ProtectRoute =()=> {
     const token = window.localStorage.getItem('token');
     if(!token){
         return redirect('/auth')
+    }else{
+        return redirect('/')
     }
-    return null;
 }
