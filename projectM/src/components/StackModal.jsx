@@ -58,7 +58,7 @@ const StackModal = ({ addStack }) => {
   return (
     <div className="absolute top-0 bg-white rounded p-4 flex justify-center items-center w-[100%] h-[100%] mb-[20%] md:mb-0">
       <div className="absolute inset-0 bg-[#0000008f] rounded h-[100%] w-full z-[9]  flex items-center justify-center cursor-pointer" onClick={closeHandler}/>
-      <div className="bg-white z-[999] w-full p-4 rounded relative md:w-[40%]">
+      <div className="bg-white z-[99] w-full p-4 rounded relative md:w-[40%]">
         <div>
           <h1 className="text-lg">Select a new stack.</h1>
          { addStackTemp.length > 0 && <div className="flex items-center">
@@ -91,7 +91,7 @@ const StackModal = ({ addStack }) => {
             <div key={index} className="w-full">
             <h4 className="flex items-center justify-between w-full text-xl font-semibold border-[1px] border-[grey] rounded p-2 my-1 text-black">
               {tool.name}
-             {!addStackTemp.find((tools)=> tools === tool.name) && <BiPlus className="cursor-pointer hover:text-[grey]" onClick={()=>addStackHandler(tool)}/>}
+             {!addStackTemp.find((tools)=> tools.name === tool.name) && <BiPlus className="cursor-pointer hover:text-[grey]" onClick={()=>addStackHandler(tool)}/>}
             </h4>
             </div>
             )}

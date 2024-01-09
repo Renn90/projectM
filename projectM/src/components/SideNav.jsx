@@ -13,15 +13,15 @@ const SideNav = ({hideBar, sethideBar, screenSize}) => {
     sethideBar(true)
   }
 
-  const span = 'flex items-center text-black m-2 rounded-md text-xl justify-start p-4 h-[40px] mx-auto cursor-pointer hover:bg-grey w-[100%] overflow-hidden';
+  const span = 'flex items-center text-black m-2 rounded-md text-xl justify-center p-4 h-[40px] mx-auto cursor-pointer hover:bg-grey w-[100%] overflow-hidden md:justify-start';
   //const anchor = `ml-2`
-  const anchor = `ml-2 ${toggleBar ? 'hidden' : 'hidden md:block'}`
+  const anchor = `ml-2 ${toggleBar ? 'hidden' : 'hidden md:block'} sm`
   const icon = `w-[40px]`
 
   return (
   <>
   <div className="absolute inset-0 z-[997] bg-[#0000008f] rounded h-[100%] w-full items-center justify-center cursor-pointer flex md:hidden" onClick={()=> sethideBar(true)}/>
-    <nav className={`flex absolute z-[999] ${!hideBar && screenSize && 'slide-in'  } ${toggleBar ? 'sidebar' : 'sidebar_close'} w-[20%] h-[100%] bg-white top-0  md:relative`}>
+    <nav className={`flex absolute z-[999]  ${!hideBar && screenSize && 'slide-in'  } ${toggleBar ? 'sidebar' : 'sidebar_close'} w-[20%] h-[100%] bg-white top-0  md:relative`}>
     <div className='w-full flex overflow-hidden flex-col justify-start items-center'>
           <hr className="border-grey w-[100%] border-2px"/>
       <div className='mt-4 mx-2 px-2 flex overflow-hidden flex-col justify-start items-start w-full h-full'>
