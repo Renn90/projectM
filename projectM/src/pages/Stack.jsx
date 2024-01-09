@@ -50,7 +50,7 @@ const Stack = () => {
             Add a new stack
           </button>
         </div>
-        {addStack && <StackModal addStack={() => setAddStack()} />}
+        {addStack && <StackModal addStack={setAddStack} />}
       </Frame>
       {loading && <Loader />}
     </section>

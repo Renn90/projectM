@@ -2,7 +2,7 @@
 export const stackSchema = {
     name: 'stack',
     title: 'Stack',
-    type: 'document',
+    type: 'document', 
     fields: [
       {
         name: 'name',

@@ -42,6 +42,20 @@ export const userSchema = {
         title: 'Portfolio',
         type: 'url',
       },
+      {
+        name: 'stack',
+        title: 'Stack',
+        type: 'array',
+        of: [
+          {
+            type: 'object',
+            fields: [
+              { name: 'name', type: 'string' },
+              { name: 'category', type: 'string' }
+            ]
+          }
+        ]
+      }
       // {
       //   name: 'projects',
       //   title: 'Projects',

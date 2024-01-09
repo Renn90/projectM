@@ -86,6 +86,7 @@ export const userLoader = async () => {
           method: "POST",
           headers: {
             Authorization: `Bearer ${sanityToken}`,
+            "Content-Type": "application/json",
           },
         });
         
