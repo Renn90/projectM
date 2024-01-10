@@ -3,15 +3,16 @@ import { Context } from "../Auth/UserContext";
 import { jwtDecode } from "jwt-decode";
 import { sanityAPI, sanityToken } from "../Auth/AuthFunction";
 import { Form, redirect } from "react-router-dom";
+import { BiX } from "react-icons/bi";
 
-const ProfileForm = ({ showForm }) => {
+const ProfileForm = ({ showForm, setShowForm }) => {
   const user = useContext(Context);
   const [firstName, setFirstName] = useState(user.firstname);
   const [lastName, setlastName] = useState(user.lastname);
   const [nickName, setnickName] = useState(user.nickname ? user.nickname : '');
   const [jobName, setjobName] = useState(user.job ? user.job : '');
   const [gitlink, setgitlink] = useState( user.gitLink ? user.gitLink : '');
-  const [profilelink, setprofilelink] = useState(user.profileLink ? user.profileLink : '');
+  const [profilelink, setprofilelink] = useState(user.portfolioLink ? user.portfolioLink : '');
 
   // function to upfate the old user input
   function HandlefirstName(e) {
@@ -36,10 +37,14 @@ const ProfileForm = ({ showForm }) => {
     "bg-white/5 p-2 mb-2 w-[100%] border-secondary text-xs bg-transparent outline-0 border border-1 rounded";
   const fetchedcartegory = ["html", "css", "javascript"];
 
+  const closeHandler = () => {
+    setShowForm(false);
+  };
+
   return (
     <>
       <div className="absolute inset-0 z-[99] bg-[#0000008f] rounded h-[100%] transition w-full items-center justify-center cursor-pointer md:hidden" />
-      <div className="w-[95%] absolute mx-auto top-4 z-[99] flex flex-col md:relative md:w-[60%] md:top-0 md:mt-[-70px]">
+      <div className="w-[95%] absolute mx-auto top-4 z-[99] flex flex-col md:relative md:w-[50%] md:top-0 md:mt-[-80px]">
         <Form
         method="post"
         action="/profile"
@@ -144,6 +149,10 @@ const ProfileForm = ({ showForm }) => {
             Update
           </button>
         </Form>
+        <BiX
+          className="absolute top-[-10px] right-[-10px] border-grey border-[1px] bg-secondary text-white rounded-full text-3xl cursor-pointer hover:bg-primary"
+          onClick={closeHandler}
+        />
       </div>
     </>
   );

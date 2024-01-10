@@ -6,6 +6,19 @@ import { sanityAPI, sanityToken } from "../pages/Auth/AuthFunction";
 import { Context } from "../pages/Auth/UserContext";
 import Loader from "./UI/Loader";
 
+export const randomColorsArray = [
+  "#FF5733",
+  "#33FF57",
+  "#5733FF",
+  "#FF3362",
+  "#33FFF1",
+  "#FFC933",
+  "#33B7FF",
+  "#BF33FF",
+  "#FF3392",
+  "#33FF84",
+];
+
 const StackModal = ({ addStack }) => {
   const [cartegory, setCartegory] = useState("programming_languages");
   const [addStackTemp, setAddStackTemp] = useState([]);
@@ -72,7 +85,7 @@ const StackModal = ({ addStack }) => {
 
   const fullStack = (e) =>
     addStackTemp.find((tools) => tools.name === e) ||
-    user.stack.find((tools) => tools.name === e)
+    user.stack.find((tools) => tools.name === e);
 
   return (
     <div className="absolute top-0 bg-white rounded p-4 flex justify-center items-center w-[100%] h-[100%] mb-[20%] md:mb-0">
@@ -129,15 +142,24 @@ const StackModal = ({ addStack }) => {
           <div className="flex flex-col items-center max-h-[200px] p-2 overflow-y-scroll">
             {slectedStack.map((tool, index) => (
               <div key={index} className="w-full">
-                <h4 className="flex items-center justify-between w-full text-xl font-semibold border-[1px] border-[grey] rounded p-2 my-1 text-black">
-                  {tool.name}
+                <div className="flex text-start items-center justify-between w-full text-xl font-semibold border-[1px] border-[grey] rounded p-2 my-1 text-black">
+                  <div className="flex items-center">
+                    <span
+                      style={{
+                        backgroundColor:
+                          randomColorsArray[Math.floor(Math.random() * randomColorsArray.length)],
+                      }}
+                      className="mr-2 h-[5px] w-[5px] rounded-full"
+                    ></span>
+                    <h2>{tool.name}</h2>
+                  </div>
                   {!fullStack(tool.name) && (
                     <BiPlus
                       className="cursor-pointer hover:text-[grey]"
                       onClick={() => addStackHandler(tool)}
                     />
                   )}
-                </h4>
+                </div>
               </div>
             ))}
             <BiX

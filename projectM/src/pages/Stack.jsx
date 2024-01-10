@@ -1,10 +1,9 @@
 import React, { useContext, useState } from "react";
 import Frame from "../components/Frame";
-import { BiLogoHtml5, BiLogoJavascript, BiPlus } from "react-icons/bi";
-import StackModal from "../components/StackModal";
+import { BiPlus } from "react-icons/bi";
+import StackModal, { randomColorsArray } from "../components/StackModal";
 import { useNavigation } from "react-router-dom";
 import Loader from "../components/UI/Loader";
-import { techStacks } from "../stackData";
 import { Context } from "./Auth/UserContext";
 
 const Stack = () => {
@@ -27,9 +26,18 @@ const Stack = () => {
               </p>
               <div className="flex items-center flex-wrap m-4 overflow-y-scroll max-h-[250px]">
                { user.stack.map((stack)=>(
-               <h4 className="flex items-center text-xl font-semibold border-[1px] border-grey rounded p-2 my-1 mr-2 text-black">
+                <div className="flex items-center text-xl font-semibold border-[1px] border-grey rounded p-2 my-1 mr-2 text-black">
+                <span
+                style={{
+                  backgroundColor:
+                    randomColorsArray[Math.floor(Math.random() * randomColorsArray.length)],
+                }}
+                className="mr-2 h-[5px] w-[5px] rounded-full"
+              ></span> 
+               <h4 className="text-secondary text-lg">
                   {stack.name}
                 </h4>
+                </div>
                 ))}
               </div>
             </>
@@ -40,7 +48,6 @@ const Stack = () => {
             </div>
           )}
           <button
-            //   disabled={loading || !validForm ? true : false}
             className="relative flex items-center mx-4 font-semibold bg-secondary text-white px-4 py-2 mt-2 rounded disabled:opacity-10 disabled:cursor-none hover:bg-primary"
             onClick={() => setAddStack(true)}
           >
