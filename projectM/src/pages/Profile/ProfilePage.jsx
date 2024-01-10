@@ -35,7 +35,7 @@ const ProfilePage = () => {
   },[action])
 
   const navigationState = useNavigation()
-  const loading = navigationState.state === 'submitting' || navigationState === 'loading'
+  const loading = navigationState.state === 'submitting' || navigationState === 'loading';
 
   return (
     <section className="w-[100%] p-4 rounded md:px-8">
@@ -91,7 +91,7 @@ const ProfilePage = () => {
                 </a>
               </span>
             </div>
-            <div>
+           {user.stack > 0 ? <div>
               <p className="font-bold text-sm opacity-70 my-1">My Stack</p>
               <div className="flex items-center flex-wrap">
                 <h4 className="flex items-center font-semibold border-[1px] border-grey rounded p-1 my-1 mr-2 text-secondary">
@@ -110,7 +110,7 @@ const ProfilePage = () => {
               >
                 <BiEdit />
               </button>
-            </div>
+            </div> : <div></div>}
           </div>
           {showForm && <ProfileForm showForm={showForm} />}
         </div>

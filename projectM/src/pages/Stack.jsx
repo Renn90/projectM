@@ -1,38 +1,36 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Frame from "../components/Frame";
 import { BiLogoHtml5, BiLogoJavascript, BiPlus } from "react-icons/bi";
 import StackModal from "../components/StackModal";
 import { useNavigation } from "react-router-dom";
 import Loader from "../components/UI/Loader";
 import { techStacks } from "../stackData";
+import { Context } from "./Auth/UserContext";
 
 const Stack = () => {
   const [addStack, setAddStack] = useState(false);
   const navigation = useNavigation();
   const loading = navigation.state == "loading";
 
-  const myStack = [];
+  const user = useContext(Context)
 
   return (
     <section className="relative w-[100%] flex flex-col justify-center p-4 px-8">
       <h1 className="font-bold text-2xl pb-2">My Stack</h1>
       <Frame>
         <div className="m-4">
-          {myStack.length > 0 ? (
+          {user.stack.length > 0 ? (
             <>
               <p className="m-4 text-[grey]">
-                These are the stacks you have worked with, to make a stack
+                These are the stacks you have worked with, <r/> to make a stack
                 available to a project; you have to add it to your stacks.
               </p>
-              <div className="flex items-center flex-wrap m-4">
-                <h4 className="flex items-center text-xl font-semibold border-[1px] border-grey rounded p-2 my-1 mr-2 text-black">
-                  <BiLogoHtml5 className="text-2xl mr-1" />
-                  Html/css
+              <div className="flex items-center flex-wrap m-4 overflow-y-scroll max-h-[250px]">
+               { user.stack.map((stack)=>(
+               <h4 className="flex items-center text-xl font-semibold border-[1px] border-grey rounded p-2 my-1 mr-2 text-black">
+                  {stack.name}
                 </h4>
-                <h4 className="flex items-center text-xl font-semibold border-[1px] border-grey rounded p-2 my-1 mr-2 text-black">
-                  <BiLogoJavascript className="text-2xl mr-1" />
-                  Javascript
-                </h4>
+                ))}
               </div>
             </>
           ) : (
