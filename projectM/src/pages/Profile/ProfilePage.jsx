@@ -24,6 +24,12 @@ const ProfilePage = () => {
   const action = useActionData()
 
   const [showForm, setShowForm] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageUpload = (event) => {
+    setSelectedImage(event.target.files[0]);
+  };
+
 
   useEffect(()=>{
     if(action){
@@ -61,7 +67,8 @@ const ProfilePage = () => {
                     <FaUser className="m-auto text-[grey] h-full w-[40%]" />
                   </div>
                 )}
-                <BiCamera className="bg-secondary p-2 rounded-full text-3xl text-white absolute bottom-0 right-0 cursor-pointer" />
+                <BiCamera onClick={handleImageUpload} className="bg-secondary p-2 rounded-full text-3xl text-white absolute bottom-0 right-0 cursor-pointer hover:opacity-70" />
+                <input type="file" id="file-input" style={{ display: 'none' }} onChange={handleImageUpload} />
               </span>
               <h2 className="font-bold pt-1">
                 {user.firstname.toUpperCase()} {user.lastname.toUpperCase()}
@@ -90,10 +97,10 @@ const ProfilePage = () => {
                   <p>{'Your git and portfolio link will appear here when added ;)'}</p>
                 </div>}
             </div>
-           {user.stack?.length > 0 ? <div>
+           {user.stack?.length > 0 ? <div className="w-full">
               <p className="font-bold text-sm opacity-70 my-1">My Stack</p>
-              <div className={`flex items-center flex-wrap ${user.stack.length > 3 && ' h-[100px] overflow-y-scroll'}`}>
-               {user.stack?.slice(0, 4).map((tool)=> ( <h4 key={tool.name} className="flex items-center font-semibold border-[1px] border-grey rounded p-1 my-[1px] mr-1 text-secondary">
+              <div className={`flex items-center w-[100%] flex-wrap ${user.stack.length > 3 && ' h-[100px] overflow-y-scroll'}`}>
+               {user.stack?.slice(0, 5).map((tool)=> ( <h4 key={tool.name} className="flex items-center px-2 font-semibold border-[1px] border-grey rounded p-1 my-[1px] mr-1 text-secondary">
                <span
                 style={{
                   backgroundColor:

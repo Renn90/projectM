@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { BiX } from "react-icons/bi";
 import { techStacks } from "../stackData";
 import { sanityAPI, sanityToken } from "../pages/Auth/AuthFunction";
 import { Context } from "../pages/Auth/UserContext";
 import Loader from "./UI/Loader";
-import { redirect, useLoaderData, useNavigation } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 
 export const randomColorsArray = [
   "#FF5733",
@@ -48,7 +48,7 @@ const StackModal = ({ addStack }) => {
     setAddStackTemp(removed);
   };
 
-
+  const navigate = useNavigate()
   async function saveStack() {
     const notExist = user.stack.map((stack)=> {
       addStackTemp.find((tool)=> tool.id !== stack.id)
@@ -83,7 +83,7 @@ const StackModal = ({ addStack }) => {
           console.log(response)
         }
         setAddStackTemp([])
-        redirect('/')
+        navigate('/stack')
       }catch (error) {
         setloading(false)
         console.log(error);
