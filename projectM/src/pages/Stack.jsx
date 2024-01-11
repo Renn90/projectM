@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Frame from "../components/Frame";
 import { BiPlus } from "react-icons/bi";
 import StackModal, { randomColorsArray } from "../components/StackModal";
@@ -7,26 +7,25 @@ import Loader from "../components/UI/Loader";
 import { Context } from "./Auth/UserContext";
 
 const Stack = () => {
+  const user =  useContext(Context)
   const [addStack, setAddStack] = useState(false);
   const navigation = useNavigation();
   const loading = navigation.state == "loading";
-
-  const user = useContext(Context)
 
   return (
     <section className="relative w-[100%] flex flex-col justify-center p-4 px-8">
       <h1 className="font-bold text-2xl pb-2">My Stack</h1>
       <Frame>
         <div className="m-4">
-          {user.stack.length > 0 ? (
+          {user.stack && user.stack.length > 0 ? (
             <>
               <p className="m-4 text-[grey]">
-                These are the stacks you have worked with, <r/> to make a stack
+                These are the stacks you have worked with, <br/> to make a stack
                 available to a project; you have to add it to your stacks.
               </p>
               <div className="flex items-center flex-wrap m-4 overflow-y-scroll max-h-[250px]">
-               { user.stack.map((stack)=>(
-                <div className="flex items-center text-xl font-semibold border-[1px] border-grey rounded p-2 my-1 mr-2 text-black">
+               {user.stack?.map((stack)=>(
+                <div  key={stack.name} className="flex items-center text-xl font-semibold border-[1px] border-grey rounded p-2 my-1 mr-2 text-black">
                 <span
                 style={{
                   backgroundColor:
@@ -63,8 +62,3 @@ const Stack = () => {
 };
 
 export default Stack;
-
-export const stackLoader = async () => {
-  console.log("https://simpleicons.org/icons/html.svg");
-  return null;
-};

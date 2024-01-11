@@ -40,7 +40,6 @@ const token = window.localStorage.getItem('token');
 
 useEffect(()=>{
 const duration = expiration()
-console.log(duration)
  if(!token){
   return;
  }

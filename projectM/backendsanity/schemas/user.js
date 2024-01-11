@@ -8,13 +8,15 @@ export const userSchema = {
         name: 'firstname',
         title: 'firstname',
         type: 'string',
-        validation: (Rule) => Rule.required(),
+        validation: (Rule) =>
+        Rule.required().min(2).max(20).warning('The name must be between 2 and 20 characters.'),
       },
       {
         name: 'lastname',
         title: 'lastname',
         type: 'string',
-        validation: (Rule) => Rule.required(),
+        validation: (Rule) =>
+        Rule.required().min(2).max(20).warning('The name must be between 2 and 20 characters.'),
       },
       {
         name: 'email',
@@ -26,11 +28,15 @@ export const userSchema = {
         name: 'nickname',
         title: 'Nickname',
         type: 'string',
+        validation: (Rule) =>
+        Rule.min(2).max(15).warning('The name must be between 2 and 20 characters.'),
       },
       {
         name: 'job',
         title: 'Job Title',
         type: 'string',
+        validation: (Rule) =>
+        Rule.min(2).max(25).warning('The name must be between 2 and 20 characters.'),
       },
       {
         name: 'gitLink',

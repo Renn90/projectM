@@ -90,10 +90,10 @@ const ProfilePage = () => {
                   <p>{'Your git and portfolio link will appear here when added ;)'}</p>
                 </div>}
             </div>
-           {user.stack.length > 0 ? <div>
+           {user.stack?.length > 0 ? <div>
               <p className="font-bold text-sm opacity-70 my-1">My Stack</p>
               <div className={`flex items-center flex-wrap ${user.stack.length > 3 && ' h-[100px] overflow-y-scroll'}`}>
-               {user.stack.slice(0, 4).map((tool)=> ( <h4 className="flex items-center font-semibold border-[1px] border-grey rounded p-1 my-[1px] mr-1 text-secondary">
+               {user.stack?.slice(0, 4).map((tool)=> ( <h4 key={tool.name} className="flex items-center font-semibold border-[1px] border-grey rounded p-1 my-[1px] mr-1 text-secondary">
                <span
                 style={{
                   backgroundColor:

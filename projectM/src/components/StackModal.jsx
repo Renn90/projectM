@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { BiX } from "react-icons/bi";
 import { techStacks } from "../stackData";
 import { sanityAPI, sanityToken } from "../pages/Auth/AuthFunction";
 import { Context } from "../pages/Auth/UserContext";
 import Loader from "./UI/Loader";
+import { redirect, useLoaderData, useNavigation } from "react-router-dom";
 
 export const randomColorsArray = [
   "#FF5733",
@@ -23,69 +24,88 @@ const StackModal = ({ addStack }) => {
   const [cartegory, setCartegory] = useState("programming_languages");
   const [addStackTemp, setAddStackTemp] = useState([]);
   const [loading, setloading] = useState(false);
+  const [error, setError] = useState('')
 
   const closeHandler = () => {
     addStack(false);
   };
+   
+ const user = useContext(Context)
+ const userid = user._id
 
-  const slectedStack = techStacks[cartegory];
+ const slectedStack = techStacks[cartegory];
 
   const pickStack = (e) => {
     setCartegory(e.target.value);
-    console.log(e.target.value);
   };
 
   const addStackHandler = (e) => {
     const constructKey = { ...e, _key: e.name };
     setAddStackTemp(() => [...addStackTemp, constructKey]);
   };
-  console.log(addStackTemp);
   const removeTempHandler = (e) => {
     const removed = addStackTemp.filter((tool) => tool.name !== e);
     setAddStackTemp(removed);
   };
 
-  const user = useContext(Context);
-  const userid = user._id;
 
   async function saveStack() {
-    try {
-      setloading(true);
-      const response = await fetch(sanityAPI, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${sanityToken}`,
-        },
-        body: JSON.stringify({
-          mutations: [
-            {
-              patch: {
-                id: userid,
-                insert: {
-                  after: "stack[-1]",
-                  items: addStackTemp,
+    const notExist = user.stack.map((stack)=> {
+      addStackTemp.find((tool)=> tool.id !== stack.id)
+    })
+    if(notExist){
+      try {
+        setloading(true);
+        const response = await fetch(sanityAPI, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${sanityToken}`,
+          },
+          body: JSON.stringify({
+            mutations: [
+              {
+                patch: {
+                  id: userid,
+                  "setIfMissing": {
+                    "stack": []
+                  },
+                  "insert": {
+                    "before": "stack[0]",
+                    "items": addStackTemp
+                  }
                 },
               },
-            },
-          ],
-        }),
-      });
-      if (!response.ok) {
-        console.log(response);
+            ],
+          }),
+        });
+        if (!response.ok) {
+          console.log(response)
+        }
+        setAddStackTemp([])
+        redirect('/')
+      }catch (error) {
+        setloading(false)
+        console.log(error);
+        setError('Something went wrong,please try again')
+        return error;
       }
-      setloading(false);
-      setAddStackTemp([]);
-      addStack(false);
-    } catch (error) {
-      console.log(error);
-      return error;
+    }else{
+      setError('Something went wrong,please try again')
     }
+    addStack(false) 
   }
 
-  const fullStack = (e) =>
-    addStackTemp.find((tools) => tools.name === e) ||
-    user.stack.find((tools) => tools.name === e);
+ const temp = (e) =>  addStackTemp.find((tools) => tools.name === e);
+ const userStack = (e) => user.stack && user.stack.find((tools) => tools.name === e);
+
+ const fullStack = (e)=> {
+      if(temp(e) || userStack(e)){
+        return true
+      }else{
+        return false
+      }
+  }
 
   return (
     <div className="absolute top-0 bg-white rounded p-4 flex justify-center items-center w-[100%] h-[100%] mb-[20%] md:mb-0">
@@ -96,6 +116,7 @@ const StackModal = ({ addStack }) => {
       <div className="bg-white z-[99] w-full p-4 rounded relative md:w-[40%]">
         <div>
           <h1 className="text-lg">Select a new stack.</h1>
+         {error && <p className="text-xs text-[red] font-semibold pb-2 opacity-60">{error}</p>}
           {addStackTemp.length > 0 && (
             <div className="flex items-center">
               <div className="flex flex-wrap rounded-lg w-full max-h-[80px] overflow-hidden overflow-y-scroll bg-grey slidebar p-2">
