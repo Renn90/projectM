@@ -61,30 +61,12 @@ export const userSchema = {
             ]
           }
         ]
+      },
+      {
+        name: 'image',
+        title: 'Profile Image',
+        type: 'image',
       }
-      // {
-      //   name: 'projects',
-      //   title: 'Projects',
-      //   type: 'array',
-      //   of: [
-      //     {
-      //       type: 'object',
-      //       fields: [
-      //         {
-      //           name: 'project',
-      //           title: 'Project',
-      //           type: 'reference',
-      //           to: [{ type: 'project' }],
-      //         },
-      //         {
-      //           name: 'role',
-      //           title: 'Role',
-      //           type: 'string', // You can define roles like 'owner', 'member', etc.
-      //         },
-      //       ],
-      //     },
-      //   ],
-      // },
     ],
   };
   

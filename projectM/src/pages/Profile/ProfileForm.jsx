@@ -56,7 +56,6 @@ const ProfileForm = ({ showForm, setShowForm }) => {
       setLengthError("");
     }
   }, [firstName, lastName, jobName, nickName]);
-  const navigate = useNavigate()
 
   return (
     <>
