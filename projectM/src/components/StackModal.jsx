@@ -50,7 +50,7 @@ const StackModal = ({ addStack }) => {
 
   const navigate = useNavigate()
   async function saveStack() {
-    const notExist = user.stack.map((stack)=> {
+    const notExist = user.stack || [].map((stack)=> {
       addStackTemp.find((tool)=> tool.id !== stack.id)
     })
     if(notExist){

@@ -9,7 +9,7 @@ import {
 import Frame from "../../components/Frame";
 import cover from "../../assets/images/storage.jpg";
 import imageUrlBuilder from '@sanity/image-url';
-import { Link, useNavigation } from "react-router-dom";
+import { Link, json, useNavigation } from "react-router-dom";
 import ProfileForm from "./ProfileForm";
 import { Context } from "../Auth/UserContext";
 import { useActionData } from "react-router-dom";
@@ -45,33 +45,35 @@ const ProfilePage = () => {
     const fileUploaded = event.target.files[0];
     const formData = new FormData()
     formData.append('image', fileUploaded);
-    const mutations = [{
-      createOrReplace: {
-        ...user,
-        image: formData,
-      }
-    }]
+    const mutations = [
+      {
+        patch: {
+          id: user._id,
+          set: { image: { _type: 'image', asset: { source:  formData.get('image')} } },
+        },
+      },
+    ];
+    console.log(formData.get('image'))
     const sendImage = async ()=> {
        const response = await fetch(sanityAPI, {
         method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "image/jpeg",
           Authorization: `Bearer ${sanityToken}`,
         },
-        body: { mutations },
+        body: JSON.stringify({ mutations }),
        })
        console.log(response)
     }
     sendImage()
   };
   useEffect(()=>{
-    if(user.image.asset){
+    if(user.image && user.image.asset){
       const builder = imageUrlBuilder(client);
       const imageUrl = builder.image(user.image).url();
       setImageUrl(imageUrl)
     }
   },[])
-
 
   return (
     <section className="w-[100%] p-4 rounded md:px-8">
@@ -89,7 +91,7 @@ const ProfilePage = () => {
           >
             <div className="flex flex-col mb-2">
               <span className="relative w-[90px] h-[90px]">
-                {user.image.asset ? (
+                {user.image &&user.image.asset ? (
                   <img
                     src={imageUrl}
                     className="h-full w-full object-cover rounded-full cursor-pointer"
