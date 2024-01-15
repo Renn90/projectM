@@ -27,11 +27,6 @@
         type: 'url',
       },
       {
-        name: 'project',
-        title: 'Project',
-        type: 'object',
-        fields: [
-          {
             name: 'members',
             title: 'Members',
             type: 'array',
@@ -43,23 +38,15 @@
                     name: 'user',
                     title: 'User',
                     type: 'reference',
-                    to: [{ type: 'user' }], // Assuming 'user' is the type of your user schema
+                    to: [{ type: 'user' }],
                   },
                   {
                     name: 'role',
                     title: 'Role',
-                    type: 'string', // Adjust the type based on the type of roles you want (e.g., string, enum).
+                    type: 'string',
                   },
-                ],
-              },
             ],
-          },
-          {
-            name: 'chat',
-            title: 'Chat',
-            type: 'reference',
-            to: [{ type: 'chat' }],
-          },
+          }
         ],
       }
     ]

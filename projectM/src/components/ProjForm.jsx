@@ -3,6 +3,7 @@ import {Context} from '../pages/Auth/UserContext'
 import { BiX } from "react-icons/bi";
 import { Form } from "react-router-dom";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
+import { sanityAPI, sanityToken } from "../pages/Auth/AuthFunction";
 
 const ProjForm = ({ formOpen }) => {
 
@@ -11,7 +12,6 @@ const ProjForm = ({ formOpen }) => {
   };
 
   const user = useContext(Context)
-  console.log(user.stack)
 
   const input =
     "bg-white/5 p-2 my-2 w-[97%] border-secondary text-xs bg-transparent outline-0 border border-1 rounded";
@@ -38,7 +38,7 @@ const ProjForm = ({ formOpen }) => {
             type="text"
             placeholder="Project Description"
             className={`${input} py-8`}
-            name="projectDesc"
+            name="description"
           />
         </span>
         <div className={flex}>
@@ -61,6 +61,12 @@ const ProjForm = ({ formOpen }) => {
             />
           </span>
         </div>
+        <input
+                value={JSON.stringify(user._id)}
+                name="user_id"
+                hidden
+                readOnly
+              />
         <button
         type="submit"
           className="relative gradient bg-secondary text-white px-4 py-2 rounded w-[100%] disabled:opacity-10 disabled:cursor-none hover:bg-primary"
@@ -80,11 +86,40 @@ export default ProjForm;
 
 export const projectFormAction = async ({request})=> {
   const formData = await request.formData();
+const userIdString = formData.get('user_id');
+const userId = JSON.parse(userIdString);
+const memberReference = {
+  _type: 'reference',
+  to: [{ _type: 'user', _ref: userId }],
+};
   const projectData = {
-    projectName: formData.get('projectName'),
+    name: formData.get('projectName'),
     description: formData.get('description'),
     git: formData.get('git'),
     liveLink: formData.get('liveLink'),
+    members: [
+      {
+        user: memberReference,
+        role: 'Owner',
+      },
+    ],
+    _type: "project",
+  }
+  try{
+    const res = await fetch(sanityAPI, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sanityToken}`,
+      },
+      body: JSON.stringify({
+        mutations: [{ createOrReplace: projectData }],
+      }),
+    });
+    console.log(res)
+    return null
+  }catch(error){
+   console.log(error)
   }
   return null
 }

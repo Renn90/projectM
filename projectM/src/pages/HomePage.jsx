@@ -1,15 +1,37 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { BiPlus } from "react-icons/bi";
 import ProjForm from "../components/ProjForm";
 import Frame from "../components/Frame";
 import { useNavigation } from "react-router-dom";
 import Loader from "../components/UI/Loader";
+import { sanityAPI } from "./Auth/AuthFunction";
 
 const HomePage = () => {
   const [openForm, setOpenForm] = useState(false)
   const proj = [];
   const navigation = useNavigation()
-  const loading = navigation.state == 'loading'
+  const loading = navigation.state == 'loading';
+
+  useEffect(()=>{
+    async function fetchUser(uid){
+      const userQuery = `*[_type == "user" && _id == "${uid}"]`;
+      try {
+        const response = await client.fetch(userQuery, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${sanityToken}`,
+            "Content-Type": "application/json",
+          },
+        });
+        
+        const user = await response;
+        return user[0];
+      } catch (err) {
+        console.log(err);
+        return null
+      }
+    }
+  },[])
 
   return (
     <section className="relative w-[100%] flex flex-col justify-center p-4 px-8">
