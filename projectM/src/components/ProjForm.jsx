@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import {Context} from '../pages/Auth/UserContext'
 import { BiX } from "react-icons/bi";
-import { Form } from "react-router-dom";
-import { AiOutlineExclamationCircle } from "react-icons/ai";
+import { Form, redirect } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 import { sanityAPI, sanityToken } from "../pages/Auth/AuthFunction";
 
 const ProjForm = ({ formOpen }) => {
@@ -89,8 +89,7 @@ export const projectFormAction = async ({request})=> {
 const userIdString = formData.get('user_id');
 const userId = JSON.parse(userIdString);
 const memberReference = {
-  _type: 'reference',
-  to: [{ _type: 'user', _ref: userId }],
+    _type: 'reference', _ref: userId 
 };
   const projectData = {
     name: formData.get('projectName'),
@@ -101,9 +100,10 @@ const memberReference = {
       {
         user: memberReference,
         role: 'Owner',
+        _key: uuidv4(),
       },
     ],
-    _type: "project",
+    _type: "project"
   }
   try{
     const res = await fetch(sanityAPI, {
@@ -116,8 +116,12 @@ const memberReference = {
         mutations: [{ createOrReplace: projectData }],
       }),
     });
-    console.log(res)
-    return null
+    if(res.ok){
+      redirect('/')
+      return 'project Added'
+    }else{
+      throw new Error('Failed to add Project')
+    }
   }catch(error){
    console.log(error)
   }
