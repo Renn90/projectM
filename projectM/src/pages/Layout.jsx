@@ -52,7 +52,7 @@ const duration = expiration()
   return (
     <UserContext>
       <NavBar sethideBar={sethideBar}/>
-      <div className="flex h-[100%]">
+      <div className="flex h-[100%] w-[100%]">
        { !hideBar && screenSize && <SideNav hideBar={hideBar} sethideBar={sethideBar} screenSize={screenSize} />}
        { !screenSize && <SideNav hideBar={hideBar} sethideBar={sethideBar} screenSize={screenSize} />}
         <Outlet />

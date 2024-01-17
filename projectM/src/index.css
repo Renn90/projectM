@@ -94,7 +94,7 @@ option{
     animation: slideOut 1s;
     transition: translateX 1s;
   }
-  @keyframes widthIfn{
+  @keyframes widthIn{
     0%{
       width: 85%;
     }
@@ -102,7 +102,7 @@ option{
       width: 100%;
     }
   }
-  .transitionf{
+  .transition{
     animation: widthIn 1s;
   }
   @media(max-width: 768px){
