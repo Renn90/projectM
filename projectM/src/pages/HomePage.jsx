@@ -82,7 +82,7 @@ const HomePage = () => {
             </div>
           </div>
           <div
-            className={`bg-[#fafbfb] shadow-sm rounded m-3 h-[100%]  flex flex-col ${
+            className={`bg-[#fafbfb] shadow-sm rounded m-3 h-[100%] overflow-y-scroll  flex flex-col ${
               projects.length <= 0 && "justify-center"
             }`}
           >
@@ -97,9 +97,9 @@ const HomePage = () => {
                 />
               </div>
             ) : (
-              <div className="flex mx-2 my-4">
+              <div className="flex flex-wrap mx-2 my-4">
                 {projects.map((project) => (
-                  <div className="rounded p-2 mr-4 bg-grey w-[200px] h-full">
+                  <div className="rounded flex flex-col justify-between h-[150px] p-3 m-4 bg-grey cursor-pointer hover:bg-[#d3d3d371] basis-[100%] md:basis-[43%] lg:basis-[20%]">
                     <i className="text-[9px] font-semibold">
                       {getDate(project._createdAt)}
                     </i>
@@ -108,25 +108,27 @@ const HomePage = () => {
                         {project.name[0].toUpperCase() + project.name.slice(1)}
                       </h2>
                     </div>
+                    <div className="flex items-center justify-between mt-4">
                     <div className="flex">
                       {project.members.map((member) => (
                         <div className="mr-[-7px]">
                           {member.user.image && member.user.image.asset ? (
-                            <div className="mt-4 border-white border-[2px] shadow-md rounded-full h-[25px] w-[25px]">
+                            <div className="border-white border-[2px] shadow-md rounded-full h-[25px] w-[25px]">
                               <img
                                 src={imageUrl}
                                 className="h-full w-full object-cover shadow-md rounded-full cursor-pointer"
                               />
                             </div>
                           ) : (
-                            <div className="bg-white mt-4 shadow-md rounded-full h-[25px] w-[25px]">
+                            <div className="bg-white shadow-md rounded-full h-[25px] w-[25px]">
                               <FaUser className="m-auto text-[grey] h-full w-[40%]" />
                             </div>
                           )}
                         </div>
                       ))}
                     </div>
-                    {project.members.map((member) => (member.user._id === user._id && <p className="text-sm font-semibold">{member.role}</p>))}
+                    {project.members.map((member) => (member.user._id === user._id && <p className="text-xs text-[red] font-semibold">{member.role}</p>))}
+                    </div>
                   </div>
                 ))}
               </div>
