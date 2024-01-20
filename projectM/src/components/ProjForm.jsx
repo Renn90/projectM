@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import {Context} from '../pages/Auth/UserContext'
 import { BiX } from "react-icons/bi";
-import { Form, redirect } from "react-router-dom";
+import { Form } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 import { sanityAPI, sanityToken } from "../pages/Auth/AuthFunction";
 
@@ -19,7 +19,7 @@ const ProjForm = ({ formOpen }) => {
   const labelForm = "flex flex-col w-[100%]";
 
   return (
-    <section className="absolute top-0 bg-white rounded p-4 flex justify-center items-center w-[100%] h-[100%] mb-[20%] md:mb-0">
+    <section className="absolute top-0 rounded p-4 flex justify-center items-center w-[100%] h-[100%] mb-[20%] md:mb-0">
       <div className="absolute inset-0 bg-[#0000008f] rounded h-[100%] w-full z-[9]  flex items-center justify-center cursor-pointer" />
       <Form method='post' className=" relative border-secondary border-[1px] z-[99] rounded bg-white p-5 w-[400px] flex flex-col justify-center">
         <p className="py-2">Fill this form to add a New project</p>
@@ -85,7 +85,7 @@ const ProjForm = ({ formOpen }) => {
 export default ProjForm;
 
 export const projectFormAction = async ({request})=> {
-  const formData = await request.formData();
+const formData = await request.formData();
 const userIdString = formData.get('user_id');
 const userId = JSON.parse(userIdString);
 const memberReference = {
@@ -116,12 +116,11 @@ const memberReference = {
         mutations: [{ createOrReplace: projectData }],
       }),
     });
-    if(res.ok){
-      redirect('/')
-      return 'project Added'
-    }else{
+    if(!res.ok){
       throw new Error('Failed to add Project')
     }
+    window.location.reload();
+    return ('added')
   }catch(error){
    console.log(error)
   }

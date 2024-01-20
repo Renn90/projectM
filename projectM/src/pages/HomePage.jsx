@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { FaUser } from "react-icons/fa6";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { TbDots } from "react-icons/tb";
 import imageUrlBuilder from "@sanity/image-url";
 import ProjForm from "../components/ProjForm";
 import Frame from "../components/Frame";
-import { useNavigation } from "react-router-dom";
+import { useActionData, useNavigate, useNavigation } from "react-router-dom";
 import Loader from "../components/UI/Loader";
 import { client } from "../client";
 import { Context } from "./Auth/UserContext";
@@ -14,38 +16,41 @@ const HomePage = () => {
   const [openForm, setOpenForm] = useState(false);
   const [projects, setProjects] = useState([]);
   const [imageUrl, setImageUrl] = useState(null);
+  const [showDelete, setShowDelete] = useState(null)
+  const [load, setLoad] = useState(false)
   const navigation = useNavigation();
   const loading = navigation.state == "loading";
   const user = useContext(Context);
   const userId = user._id;
 
-  useEffect(() => {
-    async function fetchUser() {
-      const userQuery = `*[_type == "project" && members[user._ref == "${userId}"]] {
-        _id,
-        _createdAt,
-        name,
-        members[]{
-          user->,
-          role
-        },
-      }
-      `;
-
-      try {
-        const response = await client.fetch(userQuery, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${sanityToken}`,
-            "Content-Type": "application/json",
-          },
-        });
-        setProjects(response);
-        console.log(response[0]);
-      } catch (err) {
-        console.log(err);
-      }
+  async function fetchUser() {
+    const userQuery = `*[_type == "project" && members[user._ref == "${userId}"]] {
+      _id,
+      _createdAt,
+      name,
+      description,
+      members[]{
+        user->,
+        role
+      },
     }
+    `;
+
+    try {
+      const response = await client.fetch(userQuery, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${sanityToken}`,
+          "Content-Type": "application/json",
+        },
+      });
+      setProjects(response);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
     fetchUser();
   }, []);
 
@@ -64,6 +69,28 @@ const HomePage = () => {
     const year = creationDate.getFullYear();
     return `${day} ${month}, ${year}`;
   };
+
+  const showDeleteHandler =(id)=> {
+     setShowDelete(id)
+  }
+
+  const deleteHandler = async(id)=> {
+    setLoad(true)
+    try{
+      const res = await client.delete(id, {
+        headers: {
+          Authorization: `Bearer ${sanityToken}`
+        },
+      })
+      if(!res.ok){
+        console.log(res)
+      }
+    fetchUser()
+  }catch(error){
+    console.log(error)
+  }
+  setLoad(false)
+  }
 
   return (
     <section className="relative w-[100%] flex flex-col justify-center p-4 px-8">
@@ -97,21 +124,33 @@ const HomePage = () => {
                 />
               </div>
             ) : (
-              <div className="flex flex-wrap mx-2 my-4">
+              <div className="mx-2 my-4 py-4">
+              <p className="text-xs font-semibold text-[grey] mx-4">Current projects</p>
+              <div className="flex flex-col h-full sm:flex-row sm:flex-wrap
+              ">
                 {projects.map((project) => (
-                  <div className="rounded flex flex-col justify-between h-[150px] p-3 m-4 bg-grey cursor-pointer hover:bg-[#d3d3d371] basis-[100%] md:basis-[43%] lg:basis-[20%]">
+                  <div className="rounded flex flex-col justify-between max-h-[200px] p-3 m-4 bg-grey  basis-[100%] sm:basis-[40%] lg:basis-[20%]" key={project._id} onClick={()=>showDelete && setShowDelete(null)}>
+                    <div className="flex justify-between items-center relative">
                     <i className="text-[9px] font-semibold">
                       {getDate(project._createdAt)}
                     </i>
+                    <TbDots className="font-bold text-xl cursor-pointer hover:opacity-50" onClick={()=>showDeleteHandler(project._id)}/>
+                    {showDelete === project._id && <div className="absolute right-0 top-[20px] cursor-pointer flex items-center text-[red] text-xs bg-white rounded p-2" onClick={()=>deleteHandler(project._id)}>
+                    <RiDeleteBin6Line/>
+                    <p className="ml-1">delete</p>
+                    </div>}
+                    </div>
                     <div>
                       <h2 className="font-semibold text-lg">
                         {project.name[0].toUpperCase() + project.name.slice(1)}
                       </h2>
+                      <p className="text-xs text-[grey] my-2">{project.description}</p>
                     </div>
-                    <div className="flex items-center justify-between mt-4">
+                    <hr className="border-[lightgrey] w-full border-[px] my-1"/>
+                    <div className="flex items-center justify-between">
                     <div className="flex">
                       {project.members.map((member) => (
-                        <div className="mr-[-7px]">
+                        <div className="mr-[-7px]" key={member.user._id}>
                           {member.user.image && member.user.image.asset ? (
                             <div className="border-white border-[2px] shadow-md rounded-full h-[25px] w-[25px]">
                               <img
@@ -127,10 +166,14 @@ const HomePage = () => {
                         </div>
                       ))}
                     </div>
-                    {project.members.map((member) => (member.user._id === user._id && <p className="text-xs text-[red] font-semibold">{member.role}</p>))}
+                    {project.members.map((member) => (member.user._id === user._id && <p key={member.user._id} className="text-xs text-[red] font-semibold">{member.role}</p>))}
                     </div>
                   </div>
                 ))}
+                <div className="rounded flex flex-col justify-center h-[200px] p-3 m-4 bg-grey items-center border-[2px] cursor-pointer border-[lightgrey] text-[grey] border-dashed hover:opacity-70 basis-[100%] sm:basis-[40%] lg:basis-[20%]" onClick={() => setOpenForm(true)}><BiPlus className="text-2xl"/>
+                <p>New Project</p>
+                </div>
+              </div>
               </div>
             )}
           </div>
@@ -138,6 +181,7 @@ const HomePage = () => {
         </div>
       </Frame>
       {loading && <Loader />}
+      {load && <Loader />}
     </section>
   );
 };

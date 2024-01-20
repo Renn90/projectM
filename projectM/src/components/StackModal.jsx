@@ -5,7 +5,7 @@ import { techStacks } from "../stackData";
 import { sanityAPI, sanityToken } from "../pages/Auth/AuthFunction";
 import { Context } from "../pages/Auth/UserContext";
 import Loader from "./UI/Loader";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const randomColorsArray = [
   "#FF5733",
