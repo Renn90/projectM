@@ -24,11 +24,8 @@ const HomePage = () => {
   const user = useContext(Context);
   const userId = user._id;
 
-  const [hasProcessedActionData, setHasProcessedActionData] = useState(false);
-
   const openHandler =()=> {
     setOpenForm(true)
-    setHasProcessedActionData(true)
   }
 
   async function fetchUser() {
@@ -60,7 +57,7 @@ const HomePage = () => {
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [openForm]);
 
   useEffect(() => {
     if (user.image && user.image.asset) {
@@ -185,7 +182,7 @@ const HomePage = () => {
               </div>
             )}
           </div>
-          {openForm && <ProjForm formOpen={setOpenForm} addedData={hasProcessedActionData} setAddedData={setHasProcessedActionData}/> }
+          {openForm && <ProjForm formOpen={setOpenForm} /> }
         </div>
       </Frame>
       {loading && <Loader />}

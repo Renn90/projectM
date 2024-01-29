@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../pages/Auth/UserContext";
 import { BiX } from "react-icons/bi";
-import { Form, Navigate, redirect, useActionData, useNavigate } from "react-router-dom";
+import { Form } from "react-router-dom";
+import Loader from "./UI/Loader";
 import { v4 as uuidv4 } from "uuid";
 import { sanityAPI, sanityToken } from "../pages/Auth/AuthFunction";
 
@@ -10,6 +11,7 @@ const ProjForm = ({ formOpen }) => {
   const [description, setDiscription] = useState('')
   const [git, setGit] = useState('')
   const [liveLink, setLiveLink] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const user = useContext(Context);
 
@@ -31,7 +33,9 @@ const ProjForm = ({ formOpen }) => {
     setLiveLink(e.target.value)
   }
 
- const projectFormAction = async () => { 
+ const projectFormAction = async (e) => { 
+     e.preventDefault()
+     setLoading(true)
     const userId = user._id;
     const memberReference = {
       _type: "reference",
@@ -52,24 +56,27 @@ const ProjForm = ({ formOpen }) => {
       _type: "project",
     };
     try {
-      // const res = await fetch(sanityAPI, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: `Bearer ${sanityToken}`,
-      //   },
-      //   body: JSON.stringify({
-      //     mutations: [{ createOrReplace: projectData }],
-      //   }),
-      // });
-      // if(!res.ok){
-      //   throw new Error('Failed to add Project')
-      // }
+      const res = await fetch(sanityAPI, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sanityToken}`,
+        },
+        body: JSON.stringify({
+          mutations: [{ createOrReplace: projectData }],
+        }),
+      });
+      if(!res.ok){
+        throw new Error('Failed to add Project')
+      }else{
+        formOpen(false)
+      }
       console.log('jh')
       return "added";
     } catch (error) {
       console.log(error);
     }
+    setLoading(false)
     return null;
   };
   
@@ -146,6 +153,7 @@ const ProjForm = ({ formOpen }) => {
           onClick={closeHandler}
         />
       </Form>
+      {loading && <Loader />}
     </section>
   );
 };
