@@ -11,6 +11,7 @@ import Loader from "../components/UI/Loader";
 import { client } from "../client";
 import { Context } from "./Auth/UserContext";
 import { sanityToken } from "./Auth/AuthFunction";
+import DeleteModal from "../components/UI/DeleteModal";
 
 
 const HomePage = () => {
@@ -18,6 +19,7 @@ const HomePage = () => {
   const [projects, setProjects] = useState([]);
   const [imageUrl, setImageUrl] = useState(null);
   const [showDelete, setShowDelete] = useState(null)
+  const [confirmDelete, setConfirmDelete] = useState(null)
   const [load, setLoad] = useState(false)
   const navigation = useNavigation();
   const loading = navigation.state == "loading";
@@ -50,6 +52,7 @@ const HomePage = () => {
         },
       });
       setProjects(response);
+      setConfirmDelete(null)
     } catch (err) {
       console.log(err);
     }
@@ -140,10 +143,11 @@ const HomePage = () => {
                       {getDate(project._createdAt)}
                     </i>
                     <TbDots className="font-bold text-xl cursor-pointer hover:opacity-50" onClick={()=>showDeleteHandler(project._id)}/>
-                    {showDelete === project._id && <div className="absolute right-0 top-[20px] cursor-pointer flex items-center text-[red] text-xs bg-white rounded p-2" onClick={()=>deleteHandler(project._id)}>
+                    {showDelete === project._id && <div className="absolute right-0 top-[20px] cursor-pointer flex items-center text-[red] text-xs bg-white rounded p-2" onClick={()=>setConfirmDelete(project._id)}>
                     <RiDeleteBin6Line/>
                     <p className="ml-1">delete</p>
-                    </div>}
+                    </div>
+                    }
                     </div>
                     <div>
                       <h2 className="font-semibold text-lg">
@@ -182,6 +186,7 @@ const HomePage = () => {
               </div>
             )}
           </div>
+          {confirmDelete && <DeleteModal deleteFunc={deleteHandler} id={confirmDelete} setid={setConfirmDelete}/>}
           {openForm && <ProjForm formOpen={setOpenForm} /> }
         </div>
       </Frame>
