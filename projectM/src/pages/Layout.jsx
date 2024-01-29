@@ -1,4 +1,4 @@
-import React, { useState,useEffect, useContext } from "react";
+import React, { useState,useEffect } from "react";
 import NavBar from "../components/NavBar";
 import SideNav from "../components/SideNav";
 import { Outlet } from "react-router-dom";
@@ -7,7 +7,7 @@ import { sanityToken } from "./Auth/AuthFunction";
 import { createClient } from "@sanity/client";
 import { jwtDecode } from "jwt-decode";
 import { redirect} from "react-router-dom";
-
+ 
 const Layout = () => {
   const [hideBar, sethideBar] = useState(true);
   const [screenSize, setScreenSize] = useState(true)

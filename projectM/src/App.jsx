@@ -13,13 +13,12 @@ import { profileFormAction } from "./pages/Profile/ProfileForm";
 import { ProtectRoute, protectAuth } from "./pages/Auth/ProtectRoutes";
 import ErrorPage from "./pages/ErrorPage";
 import { lougoutAction } from "./pages/logout";
-import { projectFormAction } from "./components/ProjForm";
 import ProjectPage from "./pages/ProjectPage";
 
 function App() {
   const routes = createBrowserRouter([
     {path: '/', element: <Layout />, loader: userLoader, id: 'layout', errorElement: <ErrorPage />,  children: ([
-      {index: true, element: <HomePage />, loader: ProtectRoute, action: projectFormAction},
+      {index: true, element: <HomePage />, loader: ProtectRoute},
       {path: '/:projectID', element: <ProjectPage />, loader: ProtectRoute },
       {path: '/profile', element: <ProfilePage />, action: profileFormAction, loader: ProtectRoute},
       {path: '/chat', element: <ChatHome />, loader: ProtectRoute },

@@ -6,11 +6,12 @@ import { TbDots } from "react-icons/tb";
 import imageUrlBuilder from "@sanity/image-url";
 import ProjForm from "../components/ProjForm";
 import Frame from "../components/Frame";
-import { useActionData, useNavigate, useNavigation } from "react-router-dom";
+import { useNavigation } from "react-router-dom";
 import Loader from "../components/UI/Loader";
 import { client } from "../client";
 import { Context } from "./Auth/UserContext";
 import { sanityToken } from "./Auth/AuthFunction";
+
 
 const HomePage = () => {
   const [openForm, setOpenForm] = useState(false);
@@ -22,6 +23,13 @@ const HomePage = () => {
   const loading = navigation.state == "loading";
   const user = useContext(Context);
   const userId = user._id;
+
+  const [hasProcessedActionData, setHasProcessedActionData] = useState(false);
+
+  const openHandler =()=> {
+    setOpenForm(true)
+    setHasProcessedActionData(true)
+  }
 
   async function fetchUser() {
     const userQuery = `*[_type == "project" && members[user._ref == "${userId}"]] {
@@ -170,14 +178,14 @@ const HomePage = () => {
                     </div>
                   </div>
                 ))}
-                <div className="rounded flex flex-col justify-center h-[200px] p-3 m-4 bg-grey items-center border-[2px] cursor-pointer border-[lightgrey] text-[grey] border-dashed hover:opacity-70 basis-[100%] sm:basis-[40%] lg:basis-[20%]" onClick={() => setOpenForm(true)}><BiPlus className="text-2xl"/>
+                <div className="rounded flex flex-col justify-center h-[200px] p-3 m-4 bg-grey items-center border-[2px] cursor-pointer border-[lightgrey] text-[grey] border-dashed hover:opacity-70 basis-[100%] sm:basis-[40%] lg:basis-[20%]" onClick={openHandler}><BiPlus className="text-2xl"/>
                 <p>New Project</p>
                 </div>
               </div>
               </div>
             )}
           </div>
-          {openForm && <ProjForm formOpen={setOpenForm} />}
+          {openForm && <ProjForm formOpen={setOpenForm} addedData={hasProcessedActionData} setAddedData={setHasProcessedActionData}/> }
         </div>
       </Frame>
       {loading && <Loader />}
