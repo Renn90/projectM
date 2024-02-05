@@ -143,7 +143,7 @@ const HomePage = () => {
                       {getDate(project._createdAt)}
                     </i>
                     <TbDots className="font-bold text-xl cursor-pointer hover:opacity-50" onClick={()=>showDeleteHandler(project._id)}/>
-                    {showDelete === project._id && <div className="absolute right-0 top-[20px] cursor-pointer flex items-center text-[red] text-xs bg-white rounded p-2" onClick={()=>setConfirmDelete(project._id)}>
+                    {showDelete === project._id && <div className="absolute right-0 top-[20px] cursor-pointer flex items-center shadow-md text-[red] text-xs bg-white rounded p-2" onClick={()=>setConfirmDelete(project._id)}>
                     <RiDeleteBin6Line/>
                     <p className="ml-1">delete</p>
                     </div>
