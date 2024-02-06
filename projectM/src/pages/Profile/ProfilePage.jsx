@@ -98,7 +98,7 @@ const ProfilePage = () => {
                   />
                 ) : (
                   <div className="bg-grey rounded-full h-[90px] w-[90px]">
-                    <FaUser className="m-auto text-[grey] h-full w-[40%]" />
+                    <FaUser className="ml-auto text-[grey] h-full w-[40%]" />
                   </div>
                 )}
                 <span

@@ -27,6 +27,21 @@
         type: 'url',
       },
       {
+        name: 'stack',
+        title: 'Stack',
+        type: 'array', 
+        of: [
+          {
+            type: 'string',
+            field: [
+             { name: 'name',
+              title: 'Stack Name',
+              type: 'string',}
+            ],
+          },
+        ],
+      },
+      {
             name: 'members',
             title: 'Members',
             type: 'array',

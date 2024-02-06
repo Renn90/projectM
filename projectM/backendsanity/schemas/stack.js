@@ -10,7 +10,5 @@ export const stackSchema = {
         type: 'string',
         validation: (Rule) => Rule.required(),
       },
-      // Add more fields related to stack information if needed
-      // ...
     ],
   };

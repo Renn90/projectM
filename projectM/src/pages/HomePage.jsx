@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { BiPlus } from "react-icons/bi";
+import { BiLink, BiLogoGit, BiPlus } from "react-icons/bi";
+import { BiLinkExternal } from "react-icons/bi";
 import { FaUser } from "react-icons/fa6";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { TbDots } from "react-icons/tb";
@@ -12,6 +13,7 @@ import { client } from "../client";
 import { Context } from "./Auth/UserContext";
 import { sanityToken } from "./Auth/AuthFunction";
 import DeleteModal from "../components/UI/DeleteModal";
+import AddStackModal from "../components/UI/AddStackModal";
 
 
 const HomePage = () => {
@@ -19,6 +21,7 @@ const HomePage = () => {
   const [projects, setProjects] = useState([]);
   const [imageUrl, setImageUrl] = useState(null);
   const [showDelete, setShowDelete] = useState(null)
+  const [showStackModal, setShowStackModal] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(null)
   const [load, setLoad] = useState(false)
   const navigation = useNavigation();
@@ -36,6 +39,8 @@ const HomePage = () => {
       _createdAt,
       name,
       description,
+      git,
+      liveLink,
       members[]{
         user->,
         role
@@ -57,7 +62,7 @@ const HomePage = () => {
       console.log(err);
     }
   }
-
+console.log(projects)
   useEffect(() => {
     fetchUser();
   }, [openForm]);
@@ -133,11 +138,11 @@ const HomePage = () => {
               </div>
             ) : (
               <div className="mx-2 my-4 py-4">
-              <p className="text-xs font-semibold text-[grey] mx-4">Current projects</p>
+              <p className="text-xs font-semibold text-[grey] mx-4">My projects</p>
               <div className="flex flex-col h-full sm:flex-row sm:flex-wrap
               ">
                 {projects.map((project) => (
-                  <div className="rounded flex flex-col justify-between max-h-[200px] p-3 m-4 bg-grey  basis-[100%] sm:basis-[40%] lg:basis-[20%]" key={project._id} onClick={()=>showDelete && setShowDelete(null)}>
+                  <div className="rounded flex flex-col justify-between max-h-[400px] p-3 m-4 bg-grey  basis-[100%] sm:basis-[40%] lg:basis-[20%]" key={project._id} onClick={()=>showDelete && setShowDelete(null)}>
                     <div className="flex justify-between items-center relative">
                     <i className="text-[9px] font-semibold">
                       {getDate(project._createdAt)}
@@ -155,6 +160,21 @@ const HomePage = () => {
                       </h2>
                       <p className="text-xs text-[grey] my-2">{project.description}</p>
                     </div>
+                    <div className="ml-auto mb-2">
+                      <button className="flex items-center text-[9px] border-[1px] border-black p-1 px-2 font-bold rounded-md hover:opacity-70" onClick={()=> setShowStackModal(true)}>
+                     Add Stack <BiPlus className="ml-1"/> 
+                      </button>  
+                      {showStackModal && <AddStackModal project={project._id} />}
+                    </div>
+                    <hr className="border-[lightgrey] w-full border-[px] my-1"/>
+                    <span className="flex">
+                    {project.git && <a href={project.git}>
+                    <BiLogoGit className="text-xl m-1 opacity-70 hover:opacity-50"/>
+                    </a>}
+                   {project.liveLink && <a href={project.liveLink}>
+                    <BiLinkExternal  className="text-xl m-1 opacity-70 hover:opacity-50"/>
+                    </a>}
+                    </span>
                     <hr className="border-[lightgrey] w-full border-[px] my-1"/>
                     <div className="flex items-center justify-between">
                     <div className="flex">
@@ -175,11 +195,11 @@ const HomePage = () => {
                         </div>
                       ))}
                     </div>
-                    {project.members.map((member) => (member.user._id === user._id && <p key={member.user._id} className="text-xs text-[red] font-semibold">{member.role}</p>))}
+                    {project.members.map((member) => (member.user._id === user._id && <p key={member.user._id} className={`text-xs ${member.role === 'Owner' ?  'text-[red]' : 'text-[green]'} font-semibold`}>{member.role}</p>))}
                     </div>
                   </div>
                 ))}
-                <div className="rounded flex flex-col justify-center h-[200px] p-3 m-4 bg-grey items-center border-[2px] cursor-pointer border-[lightgrey] text-[grey] border-dashed hover:opacity-70 basis-[100%] sm:basis-[40%] lg:basis-[20%]" onClick={openHandler}><BiPlus className="text-2xl"/>
+                <div className="rounded flex flex-col justify-center max-h-[400px] p-3 m-4 bg-grey items-center border-[2px] cursor-pointer border-[lightgrey] text-[grey] border-dashed hover:opacity-70 basis-[100%] sm:basis-[40%] lg:basis-[20%]" onClick={openHandler}><BiPlus className="text-2xl"/>
                 <p>New Project</p>
                 </div>
               </div>
