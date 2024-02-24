@@ -170,7 +170,7 @@ console.log(projects)
                       <button className="flex items-center text-[9px] border-[1px] border-black ml-auto p-1 px-2 font-bold rounded-md hover:opacity-70" onClick={()=> setProjectStack(project)}>
                      Add Stack <BiPlus className="ml-1"/> 
                       </button>  
-                      {projectStack && <AddStackModal project={projectStack} closeModal={setProjectStack}/>}
+                      {projectStack && <AddStackModal project={projectStack} closeModal={setProjectStack} refetch={fetchUser}/>}
                     </div>
                     <hr className="border-[lightgrey] w-full border-[px] my-1"/>
                     <span className="flex">

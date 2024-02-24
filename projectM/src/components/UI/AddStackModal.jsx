@@ -4,7 +4,7 @@ import { Context } from "../../pages/Auth/UserContext";
 import { sanityAPI, sanityToken } from "../../pages/Auth/AuthFunction";
 import { BiMinus, BiPlus } from "react-icons/bi";
 
-const AddStackModal = ({ project, closeModal }) => {
+const AddStackModal = ({ project, closeModal, refetch }) => {
   const user = useContext(Context);
   const addStack = async (stack) => {
     try {
@@ -39,6 +39,7 @@ const AddStackModal = ({ project, closeModal }) => {
         throw new Error("Failed to add stack to project");
       }
       closeModal(null)
+      refetch()
       console.log(res);
       return "added";
     } catch (error) {
@@ -70,6 +71,7 @@ const AddStackModal = ({ project, closeModal }) => {
         throw new Error("Failed to remove stack from project");
       }
       closeModal(null);
+      refetch()
       console.log(res);
       return "removed";
     } catch (error) {
