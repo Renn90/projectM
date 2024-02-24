@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { BiLink, BiLogoGit, BiPlus } from "react-icons/bi";
+import { BiLogoGit, BiPlus } from "react-icons/bi";
 import { BiLinkExternal } from "react-icons/bi";
-import { FaUser } from "react-icons/fa6";
+import { FaPlus, FaUser } from "react-icons/fa6";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { TbDots } from "react-icons/tb";
 import imageUrlBuilder from "@sanity/image-url";
@@ -14,6 +14,7 @@ import { Context } from "./Auth/UserContext";
 import { sanityToken } from "./Auth/AuthFunction";
 import DeleteModal from "../components/UI/DeleteModal";
 import AddStackModal from "../components/UI/AddStackModal";
+import AddMemberModal from "../components/UI/AddMemberModal";
 
 
 const HomePage = () => {
@@ -23,6 +24,7 @@ const HomePage = () => {
   const [showDelete, setShowDelete] = useState(null)
   const [projectStack, setProjectStack] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(null)
+  const [addMember, setAddMember] = useState(false)
   const [load, setLoad] = useState(false)
   const navigation = useNavigation();
   const loading = navigation.state == "loading";
@@ -63,7 +65,7 @@ const HomePage = () => {
       console.log(err);
     }
   }
-console.log(projects)
+  
   useEffect(() => {
     fetchUser();
   }, [openForm]);
@@ -185,7 +187,8 @@ console.log(projects)
                     <div className="flex items-center justify-between">
                     <div className="flex">
                       {project.members.map((member) => (
-                        <div className="mr-[-7px]" key={member.user._id}>
+                        <div key={member.user._id} className="flex">
+                        <div className="mr-[-7px]">
                           {member.user.image && member.user.image.asset ? (
                             <div className="border-white border-[2px] shadow-md rounded-full h-[25px] w-[25px]">
                               <img
@@ -199,6 +202,10 @@ console.log(projects)
                             </div>
                           )}
                         </div>
+                        <div className="bg-white shadow-md rounded-full h-[25px] w-[25px] cursor-pointer" onClick={()=>setAddMember(true)}>
+                              <FaPlus className="m-auto text-[grey] h-full w-[40%] hover:opacity-70" />
+                            </div>
+                        </div> 
                       ))}
                     </div>
                     {project.members.map((member) => (member.user._id === user._id && <p key={member.user._id} className={`text-xs ${member.role === 'Owner' ?  'text-[red]' : 'text-[green]'} font-semibold`}>{member.role}</p>))}
@@ -214,6 +221,7 @@ console.log(projects)
           </div>
           {confirmDelete && <DeleteModal deleteFunc={deleteHandler} id={confirmDelete} setid={setConfirmDelete}/>}
           {openForm && <ProjForm formOpen={setOpenForm} /> }
+          {addMember && <AddMemberModal closeModal={setAddMember}/>}
         </div>
       </Frame>
       {loading && <Loader />}
