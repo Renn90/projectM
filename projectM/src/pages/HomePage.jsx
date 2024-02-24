@@ -21,7 +21,7 @@ const HomePage = () => {
   const [projects, setProjects] = useState([]);
   const [imageUrl, setImageUrl] = useState(null);
   const [showDelete, setShowDelete] = useState(null)
-  const [showStackModal, setShowStackModal] = useState(false);
+  const [projectStack, setProjectStack] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(null)
   const [load, setLoad] = useState(false)
   const navigation = useNavigation();
@@ -41,6 +41,7 @@ const HomePage = () => {
       description,
       git,
       liveLink,
+      stack,
       members[]{
         user->,
         role
@@ -160,11 +161,16 @@ console.log(projects)
                       </h2>
                       <p className="text-xs text-[grey] my-2">{project.description}</p>
                     </div>
-                    <div className="ml-auto mb-2">
-                      <button className="flex items-center text-[9px] border-[1px] border-black p-1 px-2 font-bold rounded-md hover:opacity-70" onClick={()=> setShowStackModal(true)}>
+                    <div className="ml-auto mb-2 w-full flex justify-between items-start">
+                     {project.stack?.length > 0 && <ul className="flex w-1/2 overflow-x-scroll customBar cursor-pointer">
+                      {project.stack?.map((stack, index)=> (
+                       <li className="rounded text-[11px] border-[1px] border-black p-1 px-2 mr-2 mb-2" key={index}>{stack.stackName}</li>
+                      ))}
+                      </ul>}
+                      <button className="flex items-center text-[9px] border-[1px] border-black ml-auto p-1 px-2 font-bold rounded-md hover:opacity-70" onClick={()=> setProjectStack(project)}>
                      Add Stack <BiPlus className="ml-1"/> 
                       </button>  
-                      {showStackModal && <AddStackModal project={project._id} />}
+                      {projectStack && <AddStackModal project={projectStack} closeModal={setProjectStack}/>}
                     </div>
                     <hr className="border-[lightgrey] w-full border-[px] my-1"/>
                     <span className="flex">

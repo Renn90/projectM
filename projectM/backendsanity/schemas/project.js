@@ -32,11 +32,20 @@
         type: 'array', 
         of: [
           {
-            type: 'string',
-            field: [
-             { name: 'name',
+            type: 'object',
+            fields: [
+             { name: 'stackName',
               title: 'Stack Name',
-              type: 'string',}
+              type: 'string',
+            },
+              {
+                name: 'cartegory',
+                type: 'string'
+              },
+              {
+                name: 'key',
+                type: 'string'
+              }
             ],
           },
         ],
