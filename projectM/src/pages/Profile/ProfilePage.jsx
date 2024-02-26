@@ -155,7 +155,7 @@ const ProfilePage = () => {
                 </div>
               )}
             </div>
-            {user.stack?.length > 0 ? (
+            {user.stack?.length > 0 ? ( 
               <div className="w-full">
                 <p className="font-bold text-sm opacity-70 my-1">My Stack</p>
                 <div
