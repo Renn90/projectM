@@ -64,7 +64,7 @@ const ProfileForm = ({ showForm, setShowForm }) => {
         <Form
           method="post"
           action="/profile"
-          className={`relative border-grey border-[1px] rounded mx-auto bg-white p-8 w-full h-[550px] flex flex-col overflow-x-hidden overflow-y-scroll ${
+          className={`relative border-grey border-[1px] rounded mx-auto bg-white p-8 w-full h-[550px] flex flex-col overflow-x-hidden customBar overflow-y-scroll ${
             showForm && "transition"
           } md:h-full`}
         >

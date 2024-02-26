@@ -23,7 +23,7 @@ const Stack = () => {
                 These are the stacks you have worked with, <br/> to make a stack
                 available to a project; you have to add it to your stacks.
               </p>
-              <div className="flex items-center flex-wrap m-4 overflow-y-scroll max-h-[250px]">
+              <div className="flex items-center flex-wrap m-4 overflow-y-scroll max-h-[250px] customBar">
                {user.stack?.map((stack)=>(
                 <div  key={stack.name} className="flex items-center text-xl font-semibold border-[1px] border-grey rounded p-2 my-1 mr-2 text-black">
                 <span

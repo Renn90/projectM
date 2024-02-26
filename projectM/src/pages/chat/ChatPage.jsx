@@ -17,7 +17,7 @@ const ChatPage = () => {
             <h1 className="font-semibold">{project.name}</h1>
             <i className="text-[grey] text-xs">{project.devs} team members</i>
           </div>
-          <div className="flex flex-col items-start w-full h-full my-4 p-2 overflow-y-scroll slidebar">
+          <div className="flex flex-col items-start w-full h-full my-4 p-2 overflow-y-scroll customBar slidebar">
             {project.chat.map((chat) => (
               <div
                 className={`bg-grey my-4 p-3 rounded-md w-[90%] ${

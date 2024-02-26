@@ -32,6 +32,7 @@ option{
 .customBar::-webkit-scrollbar
 {
 	height: 5px;
+  width: 7px;
 	background-color: #F5F5F5;
 }
 

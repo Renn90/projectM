@@ -119,7 +119,7 @@ const StackModal = ({ addStack }) => {
          {error && <p className="text-xs text-[red] font-semibold pb-2 opacity-60">{error}</p>}
           {addStackTemp.length > 0 && (
             <div className="flex items-center">
-              <div className="flex flex-wrap rounded-lg w-full max-h-[80px] overflow-hidden overflow-y-scroll bg-grey slidebar p-2">
+              <div className="flex flex-wrap rounded-lg w-full max-h-[80px] overflow-hidden overflow-y-scroll customBar bg-grey slidebar p-2">
                 {addStackTemp.map((tool, index) => (
                   <p
                     className="text-xs bg-white p-2 m-1 rounded relative"
@@ -160,7 +160,7 @@ const StackModal = ({ addStack }) => {
           </select>
         </div>
         <div>
-          <div className="flex flex-col items-center max-h-[200px] p-2 overflow-y-scroll">
+          <div className="flex flex-col items-center max-h-[200px] p-2 overflow-y-scroll customBar">
             {slectedStack.map((tool, index) => (
               <div key={index} className="w-full">
                 <div className="flex text-start items-center justify-between w-full text-xl font-semibold border-[1px] border-[grey] rounded p-2 my-1 text-black">

@@ -160,7 +160,7 @@ const ProfilePage = () => {
                 <p className="font-bold text-sm opacity-70 my-1">My Stack</p>
                 <div
                   className={`flex items-center w-[100%] flex-wrap ${
-                    user.stack.length > 3 && " h-[100px] overflow-y-scroll"
+                    user.stack.length > 3 && " h-[100px] overflow-y-scroll customBar"
                   }`}
                 >
                   {user.stack?.slice(0, 5).map((tool) => (

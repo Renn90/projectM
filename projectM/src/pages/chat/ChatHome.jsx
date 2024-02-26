@@ -79,7 +79,7 @@ const ChatHome = () => {
   return (
     <section className="relative w-[100%] flex flex-col justify-center p-4 px-8">
       <Frame>
-        <div className="p-4 h-full overflow-y-scroll">
+        <div className="p-4 h-full overflow-y-scroll customBar">
           {proj.map((proj) => (
             <Link to={`/chat/${proj.id}`} key={proj.id}>
               <div className="my-4 pt-4 p-2 cursor-pointer rounded border-b-1 border-b-[1px] hover:bg-[lightgrey]">

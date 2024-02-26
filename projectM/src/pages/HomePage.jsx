@@ -24,7 +24,7 @@ const HomePage = () => {
   const [showDelete, setShowDelete] = useState(null)
   const [projectStack, setProjectStack] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(null)
-  const [addMember, setAddMember] = useState(false)
+  const [addMember, setAddMember] = useState(null)
   const [load, setLoad] = useState(false)
   const navigation = useNavigation();
   const loading = navigation.state == "loading";
@@ -70,6 +70,15 @@ const HomePage = () => {
     fetchUser();
   }, [openForm]);
 
+
+  const loadImg =({img})=> {
+    if(img){
+      const builder = imageUrlBuilder(client);
+      const imageUrl = builder.image(img).url();
+      return imageUrl
+    }
+  }
+
   useEffect(() => {
     if (user.image && user.image.asset) {
       const builder = imageUrlBuilder(client);
@@ -108,6 +117,8 @@ const HomePage = () => {
   setLoad(false)
   }
 
+
+
   return (
     <section className="relative w-[100%] flex flex-col justify-center p-4 px-8">
       <h1 className="font-bold text-2xl pb-2">Project Dashboard</h1>
@@ -125,7 +136,7 @@ const HomePage = () => {
             </div>
           </div>
           <div
-            className={`bg-[#fafbfb] shadow-sm rounded m-3 h-[100%] overflow-y-scroll  flex flex-col ${
+            className={`bg-[#fafbfb] shadow-sm rounded m-3 h-[100%] overflow-y-scroll customBar  flex flex-col ${
               projects.length <= 0 && "justify-center"
             }`}
           >
@@ -186,13 +197,14 @@ const HomePage = () => {
                     <hr className="border-[lightgrey] w-full border-[px] my-1"/>
                     <div className="flex items-center justify-between">
                     <div className="flex">
-                      {project.members.map((member) => (
+                    <>
+                      {project.members.slice([0, 4]).map((member) => (
                         <div key={member.user._id} className="flex">
                         <div className="mr-[-7px]">
-                          {member.user.image && member.user.image.asset ? (
+                          {member.user?.image && member.user?.image.asset ? (
                             <div className="border-white border-[2px] shadow-md rounded-full h-[25px] w-[25px]">
                               <img
-                                src={imageUrl}
+                                src={loadImg({ img: member.user.image })}
                                 className="h-full w-full object-cover shadow-md rounded-full cursor-pointer"
                               />
                             </div>
@@ -202,13 +214,16 @@ const HomePage = () => {
                             </div>
                           )}
                         </div>
-                        <div className="bg-white shadow-md rounded-full h-[25px] w-[25px] cursor-pointer" onClick={()=>setAddMember(true)}>
-                              <FaPlus className="m-auto text-[grey] h-full w-[40%] hover:opacity-70" />
-                            </div>
                         </div> 
+
                       ))}
+                        <div className="bg-white shadow-md rounded-full h-[25px] w-[25px] cursor-pointer" onClick={()=>setAddMember(project)}>
+                         <FaPlus className="m-auto text-[grey] h-full w-[40%] hover:opacity-70" />
+                       </div>
+                       {addMember && <AddMemberModal closeModal={setAddMember} project={addMember} refetch={fetchUser}/>}
+                       </>
                     </div>
-                    {project.members.map((member) => (member.user._id === user._id && <p key={member.user._id} className={`text-xs ${member.role === 'Owner' ?  'text-[red]' : 'text-[green]'} font-semibold`}>{member.role}</p>))}
+                    {project.members?.map((member) => (member.user?._id === user._id && <p key={member.user._id} className={`text-xs ${member.role === 'Owner' ?  'text-[red]' : 'text-[green]'} font-semibold`}>{member.role}</p>))}
                     </div>
                   </div>
                 ))}
@@ -221,7 +236,6 @@ const HomePage = () => {
           </div>
           {confirmDelete && <DeleteModal deleteFunc={deleteHandler} id={confirmDelete} setid={setConfirmDelete}/>}
           {openForm && <ProjForm formOpen={setOpenForm} /> }
-          {addMember && <AddMemberModal closeModal={setAddMember}/>}
         </div>
       </Frame>
       {loading && <Loader />}

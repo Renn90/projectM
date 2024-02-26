@@ -16,7 +16,7 @@ const AddStackModal = ({ project, closeModal, refetch }) => {
         },
         body: JSON.stringify({
           mutations: [
-            {
+            { 
               patch: {
                 id: project._id,
                 insert: {
@@ -98,7 +98,7 @@ const AddStackModal = ({ project, closeModal, refetch }) => {
           You only have access to your added stacks, add to your stacks to
           access
         </p>
-        <div className="flex flex-col items-center max-h-[200px] p-2 overflow-y-scroll">
+        <div className="flex flex-col items-center max-h-[200px] p-2 overflow-y-scroll customBar">
           {user.stack.map((tool, index) => (
             <div key={index} className="w-full">
               <div className="flex text-start items-center justify-between w-full text-xl font-semibold border-[1px] border-[grey] rounded p-2 my-1 text-black cursor-pointer hover:opacity-75">
